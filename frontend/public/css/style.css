@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap');
+body {
+    font-family: 'Arsenal', sans-serif;
+    font-weight: 400;
+}
+h1,h2,h3,h4,h5 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+.l__main_section {
+    background-image: url('../img/bg_img.png');
+    background-position: top center;
+    background-clip: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    padding-bottom: 9rem;
+}
+header {
+    padding: 2rem 0;
+}
+h1 {
+    font-size: 67px;
+    width: 60%;
+    margin-top: 5rem;
+    color: #000000;
+}
+.header__inner {
+    display: flex;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+p.primary_text {
+    font-size: 26px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+}
+.b__nav ul{
+    list-style-type: none;
+    width: 60%;
+    padding-left: 0;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+.b__nav ul li {
+    margin-right:1rem ;
+}
+.b__nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1rem;
+}
+.b__phone a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+.b__phone a:hover {
+    text-decoration: underline;
+}
+.text__description {
+    width: 50%;
+}
+.btn__call_to_action {
+    padding: .5rem 3rem;
+    width: min-content;
+    border: 5px solid #000000;
+}
+a.btn__call_to_action a:hover{
+    text-decoration: none;
+    color: #000000;
+}
+a.btn__call_to_action{
+    color: #000000;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 800;
+}
+.btn__wrapper {
+    margin-top: 5rem;
+}

@@ -2,13 +2,17 @@ from django.db import models
 
 
 class About(models.Model):
-    photo = models.FileField()
+    photo = models.FileField(upload_to='about/')
     description = models.TextField()
 
 
 class Interior(models.Model):
-    photo = models.FileField()
     description = models.TextField()
+
+
+class InteriorImage(models.Model):
+    interior = models.ForeignKey(Interior, default=None, on_delete=models.CASCADE)
+    photo = models.FileField(upload_to='interior/')
 
 
 class Menu(models.Model):
@@ -32,13 +36,13 @@ class WorkDay(models.Model):
 
 
 class WorkTime(models.Model):
-    monday = models.OneToOneField(WorkDay, on_delete=models.CASCADE)
-    tuesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE)
-    wednesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE)
-    thursday = models.OneToOneField(WorkDay, on_delete=models.CASCADE)
-    friday = models.OneToOneField(WorkDay, on_delete=models.CASCADE)
-    saturday = models.OneToOneField(WorkDay, on_delete=models.CASCADE)
-    sunday = models.OneToOneField(WorkDay, on_delete=models.CASCADE)
+    monday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="monday")
+    tuesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="tuesday")
+    wednesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="wednesday")
+    thursday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="thursday")
+    friday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="friday")
+    saturday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="saturday")
+    sunday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="sunday")
 
 
 class MonthReservation(models.Model):
@@ -46,14 +50,14 @@ class MonthReservation(models.Model):
 
 
 class DayReservation(models.Model):
-    month = models.FileField(MonthReservation, on_delete=models.CASCADE)
+    month = models.ForeignKey(MonthReservation, on_delete=models.CASCADE)
     day_name = models.CharField(max_length=255)
     date = models.DateField()
     is_reserved = models.BooleanField()
 
 
 class TimeGapReservation(models.Model):
-    day = models.FileField(DayReservation, on_delete=models.CASCADE)
+    day = models.ForeignKey(DayReservation, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     is_reserved = models.BooleanField()

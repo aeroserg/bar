@@ -11,7 +11,7 @@ class SendMail:
             email_password,
             email_address_to,
             message,
-            work_direction
+            subject
     ):
 
         self.host = host
@@ -20,12 +20,12 @@ class SendMail:
         self.email_password = email_password
         self.email_address_to = email_address_to
         self.message_text = message
-        self.work_direction = work_direction
+        self.subject = subject
 
     def send_email(self):
         try:
             msg = EmailMessage()
-            msg['Subject'] = 'New order: ' + self.work_direction
+            msg['Subject'] = 'New order: ' + self.subject
             msg['From'] = self.email_address_from
             msg['To'] = self.email_address_to
             msg.set_content(self.message_text)

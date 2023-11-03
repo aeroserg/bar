@@ -13,6 +13,7 @@ class Interior(models.Model):
 class InteriorImage(models.Model):
     interior = models.ForeignKey(Interior, default=None, on_delete=models.CASCADE)
     photo = models.FileField(upload_to='interior/')
+    description = models.TextField()
 
 
 class Menu(models.Model):
@@ -30,8 +31,8 @@ class Contact(models.Model):
 
 
 class WorkDay(models.Model):
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     is_vacation = models.BooleanField()
 
 

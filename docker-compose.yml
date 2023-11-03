@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  backend:
+    build: backend/
+    container_name: backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_value:/app/static/
+      - media_volume:/app/files/
+    restart: always
+    networks:
+      - app-network
+
+volumes:
+  static_value:
+  media_volume:
+
+networks:
+  app-network:
+    driver: bridge

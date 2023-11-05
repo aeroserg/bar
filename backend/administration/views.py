@@ -36,11 +36,14 @@ class GetInteriorView(APIView):
             )
 
         return Response(
-            {"interior": [
+            {
+                "interior":
                 {
+
                     "description": interior_content.description,
+                    "interior_imgs": interior_imgs
                 }
-            ], "interior_imgs": interior_imgs}
+            }
         )
 
 

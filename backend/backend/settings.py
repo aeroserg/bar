@@ -82,6 +82,13 @@ DATABASES = {
     }
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost",
+    'http://143.244.189.224',
+    "http://handmadebysemion.com",
+    "https://handmadebysemion.com"
+]
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

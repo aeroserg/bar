@@ -46,38 +46,42 @@ class WorkTime(models.Model):
     sunday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="sunday")
 
 
-class MonthReservation(models.Model):
-    name = models.CharField(max_length=255)
+class Reservation(models.Model):
+    MONTH_CHOICES = (
+        ('January', 'Январь'),
+        ('February', 'Февраль'),
+        ('March', 'Март'),
+        ('April', 'Апрель'),
+        ('May', 'Май'),
+        ('June', 'Июнь'),
+        ('July', 'Июль'),
+        ('August', 'Август'),
+        ('September', 'Сентябрь'),
+        ('October', 'Октябрь'),
+        ('November', 'Ноябрь'),
+        ('December', 'Декабрь'),
+    )
+
+    month = models.CharField(max_length=9, choices=MONTH_CHOICES, default='January')
 
 
-class DayReservation(models.Model):
-    month = models.ForeignKey(MonthReservation, on_delete=models.CASCADE)
-    day_name = models.CharField(max_length=255)
-    date = models.DateField()
-    is_reserved = models.BooleanField()
+class Days(models.Model):
+    DAY_CHOICES = (
+        ('Monday', 'Понедельник'),
+        ('Tuesday', 'Вторник'),
+        ('Wednesday', 'Среда'),
+        ('Thursday', 'Четверг'),
+        ('Friday', 'Пятница'),
+        ('Saturday', 'Суббота'),
+        ('Sunday', 'Воскресенье'),
+    )
+    month = models.ForeignKey(Reservation, default=None, on_delete=models.CASCADE)
+    days = models.CharField(max_length=9, choices=DAY_CHOICES, default='Monday')
 
-
-class TimeGapReservation(models.Model):
-    day = models.ForeignKey(DayReservation, on_delete=models.CASCADE)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    is_reserved = models.BooleanField()
-    people = models.IntegerField()
-    phone_number = models.CharField(max_length=15)
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"Reservation for {self.day} at {self.start_time}"
-
-
-class Tables(models.Model):
-    pass
-
-
-class Table(models.Model):
-    tables = models.ForeignKey(Tables, default=None, on_delete=models.CASCADE)
-    number = models.IntegerField()
-    time_gap_reservation = models.ForeignKey(TimeGapReservation, on_delete=models.CASCADE)
+    for hour in range(12, 24):
+        for minute in range(0, 60, 30):
+            time_str = f"{hour:02d}:{minute:02d}"
+            locals()[time_str] = models.BooleanField()
 
 
 class SendEmailSettings(models.Model):

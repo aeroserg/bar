@@ -54,40 +54,24 @@ class WorkTimeAdmin(admin.ModelAdmin):
         return not WorkTime.objects.exists()
 
 
-@admin.register(MonthReservation)
-class MonthReservationAdmin(admin.ModelAdmin):
-    pass
+class DaysAdmin(admin.StackedInline):
+    model = Days
 
 
-@admin.register(DayReservation)
-class DayReservationAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(TimeGapReservation)
-class TimeGapReservationAdmin(admin.ModelAdmin):
-    pass
-
-
-class TableAdmin(admin.StackedInline):
-    model = Table
-
-
-@admin.register(Tables)
-class TablesAdmin(admin.ModelAdmin):
-    inlines = [TableAdmin]
+@admin.register(Days)
+class Days(admin.ModelAdmin):
+    extra = 1  # Количество пустых форм для Days в админке
 
     class Meta:
-        model = Tables
-
-    def has_add_permission(self, *args, **kwargs):
-        return not Tables.objects.exists()
+        model = Days
 
 
-@admin.register(Table)
-class Table(admin.ModelAdmin):
-    def get_model_perms(self, request):
-        return {}
+@admin.register(Reservation)
+class ReservationAdmin(admin.ModelAdmin):
+    inlines = [DaysAdmin]
+
+    class Meta:
+        model = Reservation
 
 
 @admin.register(SendEmailSettings)

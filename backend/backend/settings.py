@@ -105,6 +105,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.127.0.0.1',
+    'http://*.127.0.0.1',
+    'http://*78.108.201.116',
+    'https://*78.108.201.116',
+    'http://localhost',
+    'http://cfs24.com',
+    'https://cfs24.com'
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

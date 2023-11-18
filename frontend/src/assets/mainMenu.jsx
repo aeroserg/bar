@@ -1,4 +1,13 @@
-function MainMenu() {
+import useApiData from '../hooks/useApiData';
+
+export default function MainMenu() {
+    
+    const apiUrl = 'http://localhost:8000/api/menu/';
+    const initialData = {
+        "menu": []
+    };
+     const munuData = useApiData(apiUrl, initialData);
+     const slicedMenuData = munuData.menu.length ? munuData.menu.slice(0, 4) : [];
     return (
         <section className="l-section">
         <h2 className="k__small">Меню</h2>
@@ -8,59 +17,25 @@ function MainMenu() {
             </div>
             <div className="b__menu_wrapper">
                 <div className="b__menu_innerGrid">
-                    <div className="b__menu_card">
-                        <div className="b__card_img">
-                            <img src="img/bg_img.png" alt="" />
-                        </div>
-                        <div className="b__card_description">
-                            <div className="b__card_name">
-                                Креветки в соусе
+                {slicedMenuData.lenght !== 0 ? slicedMenuData.map((item, index) => (
+                    <div className="b__menu_card"
+                    style={index === 3 ? { gridColumn: "auto / span 3" } : {}} 
+                     key={index}>
+                                <div className="b__card_img">
+                                    <img src={item.photo} alt={item.name} />
+                                </div>
+                                <div className="b__card_description">
+                                    <div className="b__card_name">
+                                        {item.name}
+                                    </div>
+                                    <div className="b__card_price">
+                                        {item.price}р.
+                                    </div>
+                                </div>
                             </div>
-                            <div className="b__card_price">
-                                790р.
-                            </div>
-                        </div>
-                    </div>
-                    <div className="b__menu_card">
-                        <div className="b__card_img">
-                            <img src="img/bg_img.png" alt="" />
-                        </div>
-                        <div className="b__card_description">
-                            <div className="b__card_name">
-                                Креветки в соусе
-                            </div>
-                            <div className="b__card_price">
-                                790р.
-                            </div>
-                        </div>
-                    </div>
-                    <div className="b__menu_card">
-                        <div className="b__card_img">
-                            <img src="img/bg_img.png" alt="" />
-                        </div>
-                        <div className="b__card_description">
-                            <div className="b__card_name">
-                                Креветки в соусе
-                            </div>
-                            <div className="b__card_price">
-                                790р.
-                            </div>
-                        </div>
-                    </div>
-                    <div className="b__menu_card" style={{gridColumn: "auto / span 3"}}>
-                        <div className="b__card_img">
-                            <img src="img/bg_img.png" alt="" />
-                        </div>
-                        <div className="b__card_description">
-                            <div className="b__card_name">
-                                Креветки в соусе
-                            </div>
-                            <div className="b__card_price">
-                                790р.
-                            </div>
-                        </div>
-                    </div>
-                    <div className="b__menu_card link_to_menu" style={{gridColumn: "auto / span 3", maxHeight: '440px'}} >
+                )) : <></>}
+                   
+                    <div className="b__menu_card link_to_menu" style={slicedMenuData.lenght === 0 ? {gridColumn: "auto / span 6", height: '440px'} : slicedMenuData.lenght % 4 === 0 ? {gridColumn: "auto / span 3", height: '440px'} : {gridColumn: `auto / span ${(6 - (slicedMenuData.length)*2)}`, height: '440px'} } >
                         <img src="img/btn_full_menu.svg" alt="" />
                         <div className="b__arrow_wrapper">
                             <svg id="menuArrow" width="116" height="73" viewBox="0 0 116 73" fill="none" xmlns="http://www.w3.org/2000/svg"  xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -82,5 +57,3 @@ function MainMenu() {
     )
 
 }
-
-export default MainMenu

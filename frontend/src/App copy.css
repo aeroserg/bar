@@ -9,7 +9,6 @@ h1,h2,h3,h4,h5 {
 }
 .l__main_section {
     background-image: url('../img/bg_img.png');
-    background-attachment: fixed;
     background-position: top center;
     background-clip: border-box;
     background-repeat: no-repeat;
@@ -17,15 +16,6 @@ h1,h2,h3,h4,h5 {
     height: 100vh;
     min-height: 750px;
     padding: 9rem 0;
-}
-a {
-    text-decoration: none;
-    color: inherit;
-    transition:all .3s;
-}
-a:hover {
-    text-decoration: underline;
-    color: inherit;
 }
 header {
     padding: 2rem 0;
@@ -260,7 +250,6 @@ a.btn__call_to_action#about_us_btn{
     object-fit: cover;
     width: 100%;
     max-height: 440px;
-    min-height: 440px;
     border: 3px solid #000000;
 }
 .b__menu_innerGrid {
@@ -586,150 +575,12 @@ input#time_input_hidden {
 }
 footer {
     background-image: url('../img/bg_img.png');
-    background-attachment: fixed;
+    object-fit: cover;
     background-repeat: no-repeat;
-    background-blend-mode: darken;
-    background-color: #00000099;
+    background-attachment: local;
     background-size: cover;
     background-position: center bottom;
 }
 footer {
     padding: 5rem 0;
-}
-.b__modal {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background-color: #00000063;
-}
-.block {
-    overflow: hidden!important;
-}
-button[type="submit"] {
-    color: #000000;
-    text-decoration: none;
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    font-weight: 800;
-    border: 5px solid #000000;
-    background-color: #FF883E;
-    padding: .4rem 2rem;
-}
-#booking .btn__wrapper {
-    text-align: right;
-}
-.b__form_inscription {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 400;
-    margin-top: 3rem;
-}
-.b__form_inscription a {
-    text-decoration: none;
-    color: #000000;
-}
-.b__form_inscription a:hover {
-    text-decoration: none;
-    color: #000000;
-}
-.b__booking_footerDescription {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 400;
-    margin-top: 3rem;
-}
-.b__map_wrapper {
-    max-height: 623px;
-    max-width: 75%;
-}
-.b__contacts_wrapper {
-    position: relative;
-}
-.b__footer_contacts {
-    position: absolute;
-    padding: 3rem 2rem;
-    background-color: #FF883E;
-    top: 33%;
-    right: 0;
-    width: 35%;
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 400;
-    color: #FFFFFF;
-}
-
-.b__contacts_phone::before {
-    content: '';
-    width: 40px;
-    height: 40px;
-    left: 2rem;
-    position: absolute;
-    background-image: url('../img/call.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-
-}
-.b__contacts_workTime,.b__contacts_phone, .b__contacts_address{
-    margin-left: 3rem;
-    margin-bottom: 1rem;
-}
-.b__contacts_workTime::before {
-    content: '';
-    width: 36px;
-    height: 36px;
-    left: 2rem;
-    position: absolute;
-    background-image: url('../img/alarm.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-.b__contacts_address::before {
-    content: '';
-    width: 35px;
-    height: 36px;
-    left: 2rem;
-    position: absolute;
-    background-image: url('../img/location_on.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-.b__contatcs_title {
-    font-size: 30px;
-    margin-bottom: 2rem;
-    font-weight: 700;
-}
-.b__contacts_wrapper {
-    margin-top: 5rem;
-}
-@media screen and (min-width: 997px) and (max-width: 1350px) {
-    .b__imgs img {
-        max-height: 400px;
-        min-height: 200px;
-        width: 100%;
-    }
-    .fixed_img {
-        right: 35%;
-    }
-    .b__imgs {
-        padding-left: 1rem;
-    }
-    .b__quote {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding-right: 3rem;
-        padding-left: 3rem;
-    }
-    .b__card_img img {
-        min-height: 300px;
-    }
-    .link_to_menu {
-        height: 300px!important;
-        padding: 0 10%;
-    }
-    .b__item_text {
-        font-size: 15px;
-    }
-    .b__adv_grid > * {
-        height: 260px;
-    }
 }

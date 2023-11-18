@@ -1,4 +1,11 @@
+import useApiData from '../hooks/useApiData';
+
 function AboutUs() {
+    const apiUrl = 'http://localhost:8000/api/about/';
+    const initialData = {
+        "about": {}
+    };
+     const aboutData = useApiData(apiUrl, initialData);
     return (
         <section className="l-section" id="aboutUs">
             <div className="b__img fixed_img">
@@ -10,14 +17,14 @@ function AboutUs() {
                 <div className="b__content">
                     <div className="b__quote">
                         <blockquote>
-                            Думай-как ирландец, делай-как три бокала назад
+                                {aboutData.about.description}
                         </blockquote>
                         <div className="b__undertext">
                             <p>Ирландская народная мудрость</p>
                         </div>
                     </div>
                     <div className="b__imgs">
-                        <img src="img/bg_img.png" alt="" />
+                        <img src={aboutData.about.photo} alt="" />
                     </div>
                 </div>
                 <div className="btn__wrapper text-center mt-10">

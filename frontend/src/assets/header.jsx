@@ -1,4 +1,11 @@
+import useApiData from '../hooks/useApiData';
+
 function Header() {
+    const apiUrl = 'http://localhost:8000/api/contacts/';
+    const initialData = {
+        "contacts": {}
+    };
+     const contacts = useApiData(apiUrl, initialData);
     return ( 
     <header>
         <div className="container-xl">
@@ -194,7 +201,7 @@ function Header() {
                             <li><a href="">Часы работы</a></li>
                         </ul>
                     <div className="b__phone">
-                        <a href="tel:79999999999">+7 999 999 99 99</a>
+                    <a href={`tel:${contacts.contacts.phone}`}>{contacts.contacts.phone}</a>
                     </div>
                 </div>
             </div>

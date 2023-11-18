@@ -1,4 +1,4 @@
-console.log(111)
+$(document).ready(function() {
     let currentDeviceWidth = window.outerHeight;
     let header = document.querySelector('header');
     document.addEventListener('scroll', () => {
@@ -56,16 +56,17 @@ console.log(111)
             $(`#${j} img`).css("z-index", `${defaultArr[j]}`)
         }
     })
-    $('.b__dateForSlide_container').slick({
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        prevArrow: $('.prev_btn'),
-        nextArrow: $('.next_btn'),
-        fade: true,
-        cssEase: 'linear',
-        speed: 500,
-      });
+
+    // $('.b__dateForSlide_container').slick({
+    //     infinite: true,
+    //     slidesToShow: 1,
+    //     slidesToScroll: 1,
+    //     prevArrow: $('.prev_btn'),
+    //     nextArrow: $('.next_btn'),
+    //     fade: true,
+    //     cssEase: 'linear',
+    //     speed: 500,
+    //   });
     $('.day_num').off('click').on('click', function() { 
         if ($(this).hasClass('c_available')){
             if ($('.c_checked').length !== 0) {
@@ -79,8 +80,9 @@ console.log(111)
             if ($('.m_checked ').length !== 0) {
                 $('.m_checked ').removeClass('m_checked ');
             }
-            console.log($(this));
             $(this).addClass('m_checked ');
         }       
        
     })
+}) 
+   

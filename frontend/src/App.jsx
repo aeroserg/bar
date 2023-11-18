@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<MainPage />} />
         <Route exact path="/menu/" element={<MenuPage />} />
-        <Route  path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

@@ -1,7 +1,7 @@
 import useApiData from '../hooks/useApiData';
 
 function Interior() {
-    const apiUrl = 'http://localhost:8000/api/interior/';
+    const apiUrl = 'http://localhost/api/interior/';
     const initialData = {
         "interior": []
     };

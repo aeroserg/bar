@@ -1,11 +1,9 @@
-// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import useApiData from '../hooks/useApiData';
 
-
 function Footer() {
 
-    const apiUrl = 'http://localhost:8000/api/contacts/';
+    const apiUrl = 'http://localhost/api/contacts/';
     const initialData = {
         "contacts": {}
     };

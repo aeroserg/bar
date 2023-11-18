@@ -3,7 +3,7 @@ import React from 'react';
 import useApiData from '../hooks/useApiData';
 
 export default function Contacts() {
-    const apiUrl = 'http://localhost:8000/api/contacts/';
+    const apiUrl = 'http://localhost/api/contacts/';
     const initialData = {
         "contacts": {}
     };

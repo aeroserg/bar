@@ -1,7 +1,7 @@
 import useApiData from '../hooks/useApiData';
 
 function Header() {
-    const apiUrl = 'http://localhost:8000/api/contacts/';
+    const apiUrl = 'http://localhost/api/contacts/';
     const initialData = {
         "contacts": {}
     };

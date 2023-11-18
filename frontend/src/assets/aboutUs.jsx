@@ -1,7 +1,7 @@
 import useApiData from '../hooks/useApiData';
 
 function AboutUs() {
-    const apiUrl = 'http://localhost:8000/api/about/';
+    const apiUrl = 'http://localhost/api/about/';
     const initialData = {
         "about": {}
     };

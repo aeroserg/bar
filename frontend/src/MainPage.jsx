@@ -32,7 +32,7 @@ export default function App() {
                         и удивительная ирландская атмосфера</p>
                 </div>
             </div> 
-            <div className="btn__wrapper">
+            <div className="btn__wrapper text-lg-left text-center">
                 <a className="btn__call_to_action" id="main_sect_btn" href="#booking">Забронировать</a>
             </div> 
         </div>

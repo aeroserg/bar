@@ -1,7 +1,7 @@
 import useApiData from '../hooks/useApiData';
 
 export default function MainMenu() {
-    
+
     const apiUrl = 'http://localhost/api/menu/';
     const initialData = {
         "menu": []

@@ -1,2 +1,5 @@
 .idea
-./backend/.env
+.env
+.DSstrore
+DSstrore
+.gitignore

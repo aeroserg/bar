@@ -14,10 +14,13 @@ import WorkingHours from './assets/workingHours'
 import Modals from './assets/modals'
 import Contacts from './assets/Contacts'
 
-function App() {
+export default function App() {
 
   return (
     <>
+    {useScript('https://code.jquery.com/jquery-3.7.1.min.js', 'anonymous', 'sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=')}
+    {useScript('slick.min.js')}
+    {useScript('main.js')}
     <Header />
     <section className="l__main_section">
         <div className="container-xl">
@@ -44,10 +47,9 @@ function App() {
       <Contacts />
     </main>
     <Footer />
-    <Modals />
-
+    <Modals />  
     </>
   )
 }
 
-export default App
+

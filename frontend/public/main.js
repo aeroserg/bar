@@ -1,4 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function(){
+
+
     let currentDeviceWidth = window.outerHeight;
     let header = document.querySelector('header');
     document.addEventListener('scroll', () => {
@@ -25,6 +27,7 @@ $(document).ready(function() {
     })
     let photoCount = document.querySelectorAll('.b__itemPhoto').length;
    $('.b__itemPhoto img').on("mouseover", function() {
+        console.log("mouseOver")
         let photoId = $(this).closest('.b_interier_item').attr('id');
         var defaultArr = [];
         var someVar = parseInt(photoId);
@@ -36,6 +39,7 @@ $(document).ready(function() {
             defaultArr[someVar] = i;
             someVar++
         }
+        console.log(photoCount)
         for (let j = 0; j < photoCount; j++) {
             if(j == photoCount - 1 && !isExtremum){
                 $(`#${j} .b__itemPhoto_description`)[0].classList.value = 'b__itemPhoto_description center_side';
@@ -84,5 +88,4 @@ $(document).ready(function() {
         }       
        
     })
-}) 
-   
+})

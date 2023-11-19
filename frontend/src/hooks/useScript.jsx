@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 
-const useScript = url => {
+const useScript = (url, origin, integrity) => {
   useEffect(() => {
+    
     const script = document.createElement('script');
     script.src = url;
+    integrity ? script.integrity = integrity : null; 
+    origin ? script.crossOrigin = origin : null;
+    
     document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [url]);
+  }, [url, origin, integrity]);
 };
 
 export default useScript;

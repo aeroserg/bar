@@ -9,4 +9,5 @@ urlpatterns = [
     path('menu/', views.MenuView.as_view()),
     path('contacts/', views.ContactView.as_view()),
     path('working_hours/', views.WorkingHoursView.as_view()),
+    path('get_reservation/', views.ReservationView.as_view())
 ]

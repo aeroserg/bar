@@ -3,7 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact, WorkTime)
+from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
+                     WorkTime, Reservation, Days)
 from .send_mail import SendMail
 
 
@@ -136,6 +137,25 @@ class WorkingHoursView(APIView):
                         }
                     }
                 )
+
+
+class ReservationView(APIView):
+    def get(self, request):
+
+        response = {'dates': []}
+        reservation = Reservation.objects.all()
+
+        i = 0
+        for reserv in reservation:
+            days = Days.objects.filter(month=reserv.id)
+            for day in days:
+                response['dates'].append({'date': day.date, 'time_ranges': []})
+                for hour in range(12, 24):
+                    for minute in range(0, 60, 30):
+                        time_str = f"{hour:02d}:{minute:02d}"
+                        response['dates'][i]['date_arr'].append({time_str: getattr(day, time_str)})
+                i += 1
+        return Response(response)
 
 
 class EmailMessageView(APIView):

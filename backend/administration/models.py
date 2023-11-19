@@ -77,6 +77,7 @@ class Days(models.Model):
     )
     month = models.ForeignKey(Reservation, default=None, on_delete=models.CASCADE)
     days = models.CharField(max_length=9, choices=DAY_CHOICES, default='Monday')
+    date = models.DateField(default=None)
 
     for hour in range(12, 24):
         for minute in range(0, 60, 30):

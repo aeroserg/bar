@@ -139,7 +139,7 @@ class WorkingHoursView(APIView):
                 )
 
 
-class ReservationView(APIView):
+class GetReservationView(APIView):
     def get(self, request):
 
         response = {'dates': []}
@@ -156,6 +156,17 @@ class ReservationView(APIView):
                         response['dates'][i]['date_arr'].append({time_str: getattr(day, time_str)})
                 i += 1
         return Response(response)
+
+
+class AddReservationView(APIView):
+    def post(self, request):
+        date = request.data['date']
+        time = request.data['time']
+
+        date_reservation = Days.objects.filter(date=date)
+        setattr(date_reservation, time, True)
+
+        return Response({'d': 'd'})
 
 
 class EmailMessageView(APIView):

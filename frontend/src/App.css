@@ -40,7 +40,7 @@ h1 {
     margin-top: 5rem;
     color: #000000;
 }
-.header__inner {
+.header__inner, .footer__inner {
     display: flex;
     font-weight: 600;
     color: #FFFFFF;
@@ -253,6 +253,11 @@ a.btn__call_to_action#about_us_btn{
 }
 .mt-10 {
     margin-top: 10rem;
+}
+@media screen and (min-width:997px) {
+    .mt-lg-10 {
+        margin-top: 10rem;
+    }
 }
 .b__card_img img {
     aspect-ratio: 4.25 / 4.44;
@@ -700,7 +705,49 @@ button[type="submit"] {
 .b__contacts_wrapper {
     margin-top: 5rem;
 }
+.b__arrows_wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+.b__mobile_nav {
+    position: relative;
+}
+.burger_menu {
+    padding: .8rem;
+    width: 50px;
+    background-color: #FF883E;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+.b_menu_line {
+    width: 100%;
+    height: 5px;
+    margin: .2rem 0;
+    background-color: #000000;
+}
+.b__mobMenu_wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: black;
+    transform: translateY(-1rem) translateX(2rem);
+    width: 350px;
+    height: 100vh;
+    transition: all .5s;
+}
+[data-opened="true"] {
+    transform: translateY(-1rem) translateX(2rem);
+    transition: all 1s;
+}
+[data-opened="false"] {
+    transform: translateY(-1rem) translateX(85rem);
+    transition: all 1s;    
+}
 @media screen and (min-width: 997px) and (max-width: 1350px) {
+   
     .b__imgs img {
         max-height: 400px;
         min-height: 200px;
@@ -732,15 +779,118 @@ button[type="submit"] {
     .b__adv_grid > * {
         height: 260px;
     }
+
 }
 @media screen and (max-width: 1200px) {
     .link_to_menu {
         padding: 0 30% ;
     }
+    .b__footer_contacts {
+        position: absolute;
+        padding: 3rem 2rem;
+        background-color: #ff883e;
+        top: 33%;
+        right: 0;
+        width: 40%;
+        font-family: Playfair Display,serif;
+        font-size: 24px;
+        font-weight: 400;
+        color: #fff;
+    }
+}
+@media screen and (min-width:1090px) and (max-width:1250px) {
+    .b__itemPhoto img {
+        object-fit: cover;
+        aspect-ratio: 5 / 9;
+        width: 350px;
+        max-height: 600px;
+        border: 3px solid #000000;
+        position: relative;
+    }
+    .b__interier_description {
+        font-size: 25px;
+        padding-right: 2rem;
+    }
+    .b__itemPhoto_description.center_side, .b__itemPhoto_description {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        z-index: 7;
+        width: 250px;
+        color: #000;
+        font-size: 24px;
+        font-weight: 600;
+        font-family: PlayFair Display,serif;
+    }
+    .b__itemPhoto_description.right_side {
+        transform: rotate(-90deg);
+        bottom: 125px;
+        right: -335px;
+        text-align: left;
+        left: unset;
+    }
+    .b__itemPhoto_description.left_side {
+        transform: rotate(-90deg);
+        bottom: 130px;
+        left: -100px;
+    }
+}
+@media screen and (min-width:997px) and (max-width:1089.9px) {
+    .b__itemPhoto img { 
+        object-fit: cover;
+        aspect-ratio: 5 / 9;
+        width: 280px;
+        max-height: 600px;
+        border: 3px solid #000000;
+        position: relative;
+    }
+    .b__interier_description {
+        font-size: 24px;
+        padding-right: 2rem;
+    }
+    .b__itemPhoto_description.right_side {
+        transform: rotate(-90deg);
+        bottom: 125px;
+        right: -318px;
+        text-align: left;
+        left: unset;
+    }
+    .b__itemPhoto_description.center_side, .b__itemPhoto_description {
+        position: absolute;
+        bottom: 62px;
+        left: 14px;
+        z-index: 7;
+        width: 250px;
+        color: #000;
+        font-size: 24px;
+        font-weight: 600;
+        font-family: PlayFair Display,serif;
+    }
+    .b__itemPhoto_description.right_side {
+        transform: rotate(-90deg);
+        bottom: 170px;
+        right: -335px;
+        text-align: left;
+        left: unset;
+    }
+    .b__itemPhoto_description.left_side {
+        transform: rotate(-90deg);
+        bottom: 175px;
+        left: -100px;
+    }
 }
 
-
 @media screen and (max-width: 997px) {
+    ul.b__mob_menu {
+        list-style-type: none;
+        padding: 2rem;
+    }
+    .b__mob_menu li{
+        margin-bottom: 1rem;
+    }
+    .header__inner {
+        justify-content:space-between;
+    }
     .b__adv_grid {
         flex-direction: column;
     }
@@ -763,6 +913,8 @@ button[type="submit"] {
         left: -36px;
     }
     blockquote {
+        font-size: 35px;
+        line-height: 45px;
         width: 100%;
     }
     .b__content>* {
@@ -780,24 +932,280 @@ button[type="submit"] {
     }
     .b__imgs {
         padding: 0 1rem;
+        text-align: center;
     }
     .b__interier_wrapper {
         flex-direction: column;
     }
+    .b__dateForSlide_item {
+        flex-direction: column;
+    }
+    .b__timetable_wrapper {
+        font-size: 25px;
+        width: 50%;
+    }
+    .b__itemPhoto img {
+        width: 100%;
+        object-fit: cover;
+        width: 100%;
+        max-height: 600px;
+        border: 3px solid #000000;
+        position: relative;
+    }
+    .k__medium::after, .k__medium::before{
+        content: '';
+        width: calc(40% - 6rem)!important;
+    }
+    .k__large::after, .k__large::before{
+        content: '';
+        width: calc(35% - 6rem)!important;
+    }
+    .b__footer_contacts {
+        position: static;
+        padding: 3rem 2rem;
+        background-color: #ff883e;
+        width: 100%;
+        font-family: Playfair Display,serif;
+        font-size: 24px;
+        font-weight: 400;
+        color: #fff;
+    }
+    .b__map_wrapper {
+        max-height: 400px;
+        max-width: 100%;
+    }
+    iframe {
+        height: 24rem!important;
+    }
+    .b__interier_description {
+        font-size: 22px;
+        margin-bottom: 1rem;
+        padding-right: .5rem;
+    }
+    .b__adv_item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .footer__inner {
+        font-weight: 600;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer__inner .b__nav {
+        flex-direction: column;
+        margin: 1rem 0;
+        align-items: flex-start;
+    }
+    .footer__inner .b__nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+    .header__inner .logo svg {
+        width: 45%;
+        height: 100%;
+    }
+    .header__inner .logo svg path {
+        fill: #000000;
+    }
+    header {
+        padding: .75rem 0 0 0;
+        background-color: #ffffffaa;
+        box-shadow: 0px 2px 13px 9px #ffffffaa;
+    }
+    #menu .btn__wrapper {
+        align-items: center;
+    }
+    .btn__call_to_action#about_us_btn {
+        font-size: 26px;
+        margin-top: 1rem;
+    }
 }
 @media screen and (max-width: 760px) {
-    b__imgs img {
+    .b__adv_item {
+        justify-content: space-between;
+    }
+    .b__timetable_wrapper {
+        position: static;
+    }
+    .fixed_img {
+        position: absolute;
+        top: 40%;
+        left: 1%;
+    }
+    a.btn__call_to_action#about_us_btn {
+        font-size: 22px;
+    }
+    .link_to_menu {
+        padding: 1px 9%;
+    }
+    #menu .btn__wrapper {
+        align-items: center;
+    }
+    a.btn__call_to_action#download_menu {
+        font-size: 26px;
+    }
+    .btn__call_to_action#about_us_btn {
+        font-size: 26px;
+        margin-top: 1rem;
+    }
+    .b__imgs img {
         width: 100%;
         height: 250px;
         z-index: 2;
         position: relative;
         object-fit: cover;
-        aspect-ratio: 3 / 2;
     }
-    .b__dateForSlide_item {
-        flex-direction: column;
+    .b__timetable_wrapper {
+        font-size: 1.5rem;
     }
     h1 {
         margin-top: 1rem;
+    }
+    .btn__wrapper:first-child {
+        text-align: center;
+    }
+    .b__timetable_wrapper {
+        font-size: 35px;
+        width: 100%;
+    }
+    .b__bgc_img img {
+        width: 100%;
+        object-fit: cover;
+        max-height: 275px;
+    }
+    .f__input_wrapper {
+        flex-direction: column;
+    }
+    .f__input_wrapper>* {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .b__booking_title {
+        font-size: 32px;
+        margin-bottom: 1rem
+    }
+    .b__form_rowTitle {
+        font-size: 24px;
+        margin-bottom: 1rem;
+    }
+    .b_month {
+        font-size: 22px;
+    }
+    .calendar {
+        font-size: 18px;
+    }
+    .days .day_num {
+        font-size: 20px;
+        height: 29px;
+        margin: 0.1rem 0.2rem
+    }
+    .time {
+        margin: 0.2rem 0;
+        font-size: 20px;
+        font-weight: 400;
+        font-family: PlayFair Display,serif;
+        color: #000;
+        padding: 0.2rem;
+    }
+    .b__timeRanges_container {
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        justify-items: center;
+        align-content: center;
+        height: 100%;
+        justify-content: space-around;
+
+    }
+}
+@media screen and (max-width: 1400px) {
+    .b__timetable_wrapper {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    blockquote {
+        font-size: 32px;
+        line-height: 38px;
+    }
+    .k__medium::after, .k__medium::before{
+        content: '';
+        width: calc(40% - 6rem)!important;
+    }
+    .k__large::after, .k__large::before{
+        content: '';
+        width: calc(35% - 6rem)!important;
+    }
+    .b__booking_title {
+        font-size: 22px;
+    }
+    .b__form_rowTitle {
+        font-size: 18px;
+        font-weight: 600;
+        font-family: PlayFair Display,serif;
+        color: #000;
+        margin-bottom: 1rem;
+    }
+    .f__input_wrapper {
+        display: flex;
+        margin-bottom: .1rem;
+        flex-direction: column;
+    }
+    .b__booking_wrapper {
+        padding: 1rem;
+        background-color: #d9d9d9;
+    }
+    button[type=submit] {
+        font-size: 22px;
+    }
+    #booking .btn__wrapper {
+        text-align: center;
+        margin-top: 2rem;
+    }
+    .b__form_inscription {
+        font-size: 20px;
+    }
+    .b__booking_footerDescription {
+        font-size: 20px;
+        padding: 1rem;
+        margin-top: 0;
+        background-color: #d9d9d9
+    }
+    .b__contatcs_title {
+        font-size: 26px;
+    }
+    .b__footer_contacts {
+        position: static;
+        font-size: 18px;
+    }
+    h2 {
+        font-size: 35px;
+        margin-bottom: 2rem;
+    }
+    .b__contacts_wrapper {
+        margin-top: 2rem;
+    }
+    .b__timetable_wrapper {
+        font-size: 28px;
+    }
+    .b__menu_title {
+        font-size: 40px;
+    }
+    .l__main_section .btn__wrapper {
+        margin-top: 4rem;
+    }
+    h1 {
+        margin-top: 3rem;
+    }
+    .l__main_section .primary_text {
+        margin-top: 2rem;
+    }
+    .b__timetable_wrapper {
+        padding: 1rem 2rem;
+    }
+    footer {
+        padding: 2rem 0;
     }
 }

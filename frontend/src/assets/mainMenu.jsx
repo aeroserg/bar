@@ -9,7 +9,7 @@ export default function MainMenu() {
      const munuData = useApiData(apiUrl, initialData);
      const slicedMenuData = munuData.menu.length ? munuData.menu.slice(0, 4) : [];
     return (
-        <section className="l-section">
+        <section className="l-section" id='menu'>
         <h2 className="k__small">Меню</h2>
         <div className="container-xl">
             <div className="b__menu_title">
@@ -47,7 +47,7 @@ export default function MainMenu() {
                     </div>
                 </div>
             </div>
-            <div className="btn__wrapper d-flex justify-content-between">
+            <div className="btn__wrapper d-flex justify-content-between flex-column flex-lg-row">
                 <a className="btn__call_to_action" id="download_menu" href="#booking">Скачать меню</a>
                 <a className="btn__call_to_action" id="about_us_btn" href="#booking">Забронировать</a>
 

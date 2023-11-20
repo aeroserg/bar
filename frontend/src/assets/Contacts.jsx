@@ -9,7 +9,7 @@ export default function Contacts() {
     };
      const contacts = useApiData(apiUrl, initialData);
     return (
-        <section className="l-section">
+        <section className="l-section"  id="contacts">
         <h2 className="k__medium">Контакты</h2>
         <div className="container">
             <div className="b__contacts_wrapper">

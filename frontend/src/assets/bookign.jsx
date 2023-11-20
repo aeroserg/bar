@@ -2,7 +2,25 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 
+
 export default function Booking() {
+
+    const [data, setData] = useState({
+        dates:[]
+    })
+    useEffect(() => {
+        fetch('http://localhost/api/get_reservation/')
+        .then(response => response.json())
+        .then(data => {
+            setData(data);
+        })
+    },[])
+
+    const [currentMonth, setCurrentMonth] = useState({
+        
+    })
+
+
     return (
         <section className="l-section" id="booking">
         <h2 className="k__large">Бронирование</h2>

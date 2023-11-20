@@ -18,9 +18,8 @@ export default function App() {
 
   return (
     <>
-    {useScript('https://code.jquery.com/jquery-3.7.1.min.js', 'anonymous', 'sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=')}
-    {useScript('slick.min.js')}
-    {useScript('main.js')}
+    {useScript('jquery.min.js')}
+  
     <Header />
     <section className="l__main_section">
         <div className="container-xl">
@@ -32,7 +31,7 @@ export default function App() {
                         и удивительная ирландская атмосфера</p>
                 </div>
             </div> 
-            <div className="btn__wrapper text-lg-left text-center">
+            <div className="btn__wrapper ">
                 <a className="btn__call_to_action" id="main_sect_btn" href="#booking">Забронировать</a>
             </div> 
         </div>
@@ -48,6 +47,7 @@ export default function App() {
     </main>
     <Footer />
     <Modals />  
+    {useScript('main.js')} T
     </>
   )
 }

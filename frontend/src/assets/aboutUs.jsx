@@ -23,11 +23,11 @@ function AboutUs() {
                             <p>Ирландская народная мудрость</p>
                         </div>
                     </div>
-                    <div className="b__imgs">
+                    <div className="b__imgs">   
                         <img src={aboutData.about.photo} alt="" />
                     </div>
                 </div>
-                <div className="btn__wrapper text-center mt-10">
+                <div className="btn__wrapper text-center mt-lg-10">
                     <a className="btn__call_to_action" id="about_us_btn" href="#booking">Забронировать</a>
                 </div>
             </div>

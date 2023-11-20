@@ -1,6 +1,6 @@
 function WhyUs() {
     return (
-        <section className="l-section">
+        <section className="l-section"  id="whyUs">
         <h2 className="k__medium">Почему мы?</h2>
         <div className="container-xl">
             <div className="b__adv_grid">
@@ -16,7 +16,7 @@ function WhyUs() {
                     <div className="b__item_img">
                         <img src="img/person.svg" alt="" />
                     </div>
-                    <div className="b__item_text">
+                    <div className="b__item_text fs-6">
                         Высококвалифицированный шеф и хороший сервис
                     </div>
                 </div>

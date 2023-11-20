@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'administration',
     'rest_framework',
     'corsheaders',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -151,3 +152,7 @@ MEDIA_URL = 'files/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRONJOBS = [
+    ('0 0 1 * *', 'administration.cron.generate_month_orders')
+]

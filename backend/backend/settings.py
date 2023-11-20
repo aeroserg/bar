@@ -154,5 +154,5 @@ MEDIA_URL = 'files/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRONJOBS = [
-    ('0 0 1 * *', 'administration.cron.generate_month_orders')
+    ('*/2 * * * *', 'administration.cron.generate_month_orders')
 ]

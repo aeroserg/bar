@@ -8,7 +8,6 @@ export default function Contacts() {
         "contacts": {}
     };
      const contacts = useApiData(apiUrl, initialData);
-    console.log(contacts)
     return (
         <section className="l-section">
         <h2 className="k__medium">Контакты</h2>

@@ -153,7 +153,7 @@ class GetReservationView(APIView):
                 for hour in range(12, 24):
                     for minute in range(0, 60, 30):
                         time_str = f"{hour:02d}:{minute:02d}"
-                        response['dates'][i]['date_arr'].append({time_str: getattr(day, time_str)})
+                        response['dates'][i]['time_ranges'].append({time_str: getattr(day, time_str)})
                 i += 1
         return Response(response)
 

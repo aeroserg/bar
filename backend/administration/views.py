@@ -163,10 +163,13 @@ class AddReservationView(APIView):
         date = request.data['date']
         time = request.data['time']
 
-        date_reservation = Days.objects.filter(date=date)
+        date_reservation = Days.objects.get(date=date)
+        if getattr(date_reservation, time):
+            return Response({'success': False})
         setattr(date_reservation, time, True)
+        date_reservation.save()
 
-        return Response({'d': 'd'})
+        return Response({'success': True})
 
 
 class EmailMessageView(APIView):

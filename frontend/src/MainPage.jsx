@@ -47,7 +47,7 @@ export default function App() {
     </main>
     <Footer />
     <Modals />  
-    {useScript('main.js')} T
+    {useScript('main.js')} 
     </>
   )
 }

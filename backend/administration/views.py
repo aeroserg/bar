@@ -145,16 +145,25 @@ class GetReservationView(APIView):
         response = {'dates': []}
         reservation = Reservation.objects.all()
 
-        i = 0
+        j = 0
         for reserv in reservation:
+            i = 0
             days = Days.objects.filter(month=reserv.id)
+            response['dates'].append({'month': days[0].date.month, "days": []})
             for day in days:
-                response['dates'].append({'date': day.date, 'time_ranges': []})
+                response['dates'][j]['days'].append({'date': day.date, 'time_ranges': []})
+                #response['dates'].append({'month': day.date.month, 'date': day.date, 'time_ranges': []})
                 for hour in range(12, 24):
                     for minute in range(0, 60, 30):
                         time_str = f"{hour:02d}:{minute:02d}"
-                        response['dates'][i]['time_ranges'].append({time_str: getattr(day, time_str)})
+                        response['dates'][j]['days'][i]['time_ranges'].append(
+                            {
+                                "time": time_str,
+                                "is_available": getattr(day, time_str)
+                            }
+                        )
                 i += 1
+            j += 1
         return Response(response)
 
 

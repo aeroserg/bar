@@ -34,6 +34,13 @@ services:
       - backend
       - frontend
 
+  cron:
+    build: add_new_month/
+    container_name: cron
+    ports:
+      - "9000:9000"
+    restart: always
+
 volumes:
   static_value:
   media_volume:

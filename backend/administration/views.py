@@ -147,12 +147,12 @@ class GetReservationView(APIView):
 
         j = 0
         for reserv in reservation:
+            is_vacant = False
             i = 0
             days = Days.objects.filter(month=reserv.id)
             response['dates'].append({'month': days[0].date.month, "days": []})
             for day in days:
-                response['dates'][j]['days'].append({'date': day.date, 'time_ranges': []})
-                #response['dates'].append({'month': day.date.month, 'date': day.date, 'time_ranges': []})
+                response['dates'][j]['days'].append({'is_vacant': is_vacant, 'date': day.date, 'time_ranges': []})
                 for hour in range(12, 24):
                     for minute in range(0, 60, 30):
                         time_str = f"{hour:02d}:{minute:02d}"
@@ -162,6 +162,10 @@ class GetReservationView(APIView):
                                 "is_available": getattr(day, time_str)
                             }
                         )
+                        if not getattr(day, time_str):
+                            is_vacant = True
+
+                response['dates'][j]['days'][i]['is_vacant'] = is_vacant
                 i += 1
             j += 1
         return Response(response)

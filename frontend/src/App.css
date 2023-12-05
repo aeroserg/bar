@@ -807,6 +807,7 @@ button[type="submit"] {
         font-weight: 400;
         color: #fff;
     }
+    
 }
 @media screen and (min-width:1090px) and (max-width:1250px) {
     .b__itemPhoto img {
@@ -1060,6 +1061,7 @@ button[type="submit"] {
     }
 }
 @media screen and (max-width: 760px) {
+    
     .b__menu_card {
         grid-column: auto / span 6!important;
         padding: 1rem;
@@ -1161,6 +1163,20 @@ button[type="submit"] {
         height: 100%;
         justify-content: space-around;
 
+    }
+    .m_checked {
+        color: #ffffff;
+    }
+    .m_available {
+        background-color: #FF883E;
+    }
+    
+    .c_available {
+        color: #FF883E!important;
+    }
+    .c_checked {
+        background-color: #ffffff;
+        color: #000000!important;
     }
 }
 @media screen and (max-width: 1400px) {

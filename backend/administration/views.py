@@ -151,7 +151,7 @@ class GetReservationView(APIView):
         for reserv in reservation:
             is_vacant = False
             i = 0
-            days = Days.objects.filter(month=reserv.id).order_by('date')
+            days = Days.objects.filter(month=reserv.id).order_by('id')
             response['dates'].append({'month': days[0].date.month, "days": []})
             for day in days:
                 response['dates'][j]['days'].append({'is_vacant': is_vacant, 'date': day.date, 'time_ranges': []})

@@ -2,6 +2,8 @@ from django.forms import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import datetime
+from calendar import monthrange
 
 from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
                      WorkTime, Reservation, Days)
@@ -143,13 +145,15 @@ class GetReservationView(APIView):
     def get(self, request):
 
         response = {'dates': []}
-        reservation = Reservation.objects.all()
+        reservation = Reservation.objects.all().order_by('id')
+        print(reservation)
 
         j = 0
         for reserv in reservation:
+            print(reserv.month)
             is_vacant = False
             i = 0
-            days = Days.objects.filter(month=reserv.id)
+            days = Days.objects.filter(month=reserv.id).order_by('date')
             response['dates'].append({'month': days[0].date.month, "days": []})
             for day in days:
                 response['dates'][j]['days'].append({'is_vacant': is_vacant, 'date': day.date, 'time_ranges': []})
@@ -203,3 +207,38 @@ class EmailMessageView(APIView):
                              subject=subject)
 
         return Response({"Send email success": send_mail.send_email()})
+
+
+class GenInitReservationView(APIView):
+    def get(self, request):
+        month_names = {}
+        current_date = datetime.datetime.today()
+        first_month_name = current_date.strftime('%B')
+        month_names[first_month_name] = current_date
+
+        second_month = datetime.date(current_date.year, current_date.month % 12 + 1, 1)
+        second_month_name = second_month.strftime('%B')
+        month_names[second_month_name] = second_month
+
+        third_month = datetime.date(second_month.year, second_month.month % 12 + 1, 1)
+        third_month_name = third_month.strftime('%B')
+        month_names[third_month_name] = third_month
+        for key, value in month_names.items():
+            r = Reservation(month=key)
+            r.save()
+            days_in_month = monthrange(value.year, value.month)[1]
+
+            for i in range(days_in_month):
+                d = Days(month=r, date=datetime.date(value.year, value.month, i+1))
+                for hour in range(12, 24):
+                    for minute in range(0, 60, 30):
+                        time_str = f"{hour:02d}:{minute:02d}"
+                        setattr(d, time_str, False)
+                d.save()
+
+        return Response({"Success": True})
+
+
+# class AddNewMonth(APIView):
+#     def get(self, request):
+#         reservation = Reservation.objects.get.

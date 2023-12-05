@@ -146,11 +146,9 @@ class GetReservationView(APIView):
 
         response = {'dates': []}
         reservation = Reservation.objects.all().order_by('id')
-        print(reservation)
 
         j = 0
         for reserv in reservation:
-            print(reserv.month)
             is_vacant = False
             i = 0
             days = Days.objects.filter(month=reserv.id).order_by('date')

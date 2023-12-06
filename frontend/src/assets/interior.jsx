@@ -15,7 +15,6 @@ function Interior() {
         fetch('http://localhost/api/interior/')
         .then(response => response.json())
         .then(data => {
-            console.log(data.interior.interior_imgs.length)
           setData(data);
           setCount(data.interior.interior_imgs.length)
         })

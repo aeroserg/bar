@@ -11,7 +11,6 @@ import Footer from './assets/footer'
 import Booking from './assets/bookign'
 import Interior from './assets/interior'
 import WorkingHours from './assets/workingHours'
-import Modals from './assets/modals'
 import Contacts from './assets/Contacts'
 
 export default function App() {
@@ -46,7 +45,6 @@ export default function App() {
       <Contacts />
     </main>
     <Footer />
-    <Modals />  
     {useScript('main.js')} 
     </>
   )

@@ -1,119 +1,172 @@
+/**
+ * @var mockData Object
+ * @var currentDayIndex Number
+ * @var currentMonthIndex Number
+ * @var currentDayData Object
+ * @var monthData Object
+ */
+
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
 import { useEffect, useState } from 'react';
 import Loader from './modals'
+import axios from "axios";
+import Cookies from 'universal-cookie';
+
 
 export default function Booking() {
-
-    const [data, setData] = useState({
-        dates:[ {
-            month: 1,
-            days: [
-                {
-                    date: '2023-11-25',
-                    time_ranges: [
-                        {
-                            time: "Выберете ",
-                            is_available: false
-                        },
-                        {
-                            time: "дату,",
-                            is_available: false
-                        },
-                        {
-                            time: "чтобы",
-                            is_available: false
-                        },
-                        {
-                            time: "увидеть",
-                            is_available: false
-                        },
-                        {
-                            time: "доступное",
-                            is_available: false
-                        },
-                        {
-                            time: "время",
-                            is_available: false
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-    })
-  
-    
-    function handleDayClick(event, index) {
-        event.preventDefault();
-        document.querySelector('.c_checked') ?  document.querySelector('.c_checked')?.classList.remove('c_checked'): undefined;
-        setCurrDay(index)
-        setCurrentDayData({
-            ...currentMonthData.days[index]
-        })
-        event.target.classList.add('c_checked');
-    }
-    function handleTimeClick(event) {
-        event.preventDefault();
-        document.querySelector('.m_checked') ?  document.querySelector('.m_checked')?.classList.remove('m_checked'): undefined;
-        event.target.classList.add('m_checked');
-    }
-    function handleNewMonthData() {
-        setCurrentMonthData({
-            ...data.dates[currentMonth]
-        });
-        setCurrDay(0);
-    }
-    // const [userName, setUserName] = useState('');
-
-    async function handleSubmit(event){
-        event.preventDefault();
-        let dataToSend;
-        let res = await fetch("http://localhost/api/add_reservation/", {
-            method: "POST",
-            body: JSON.stringify(dataToSend),
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          });
-          let data = await res.json();
-          if(data.success) {
-             alert('Заявка на броирование сделана. Скоро мы позвоним вам, чтобы уточнить детали.')
-            
-          } else if(!data) {
-              alert('Что-то пошло не так, попытайтесь позже или позвоните нам!');
-          }
-    }
+    const now = new Date();
+    const cookies = new Cookies();
+    // set uo mockdata from api, requseting server for data just 1 time, so no dependences in the useEffect array
+    const [mockData, setData] = useState([])
+    const [firstDayWeekIndex, setFirstDayWeekIndex] = useState(1)
     useEffect(() => {
-        let ignore = false;
-        fetch('http://localhost/api/get_reservation/')
-        .then(response => response.json())
-        .then(data => {
-           if (!ignore) setData(data);
-           if (!ignore) setCurrentMonthData(data.dates[0]);
-           if (!ignore) setCurrMonth(0);
-           if (!ignore) setCurrDay(0);
-           if (!ignore) setCurrentDayData({ ...currentMonthData.days[currentDay]});
-        })
-       return () => {ignore = true}
+        ( async () => {
+            try {
+                const { data } = await axios("http://localhost/api/get_reservation/");
+                setData(data.dates)                
+              } catch (err) {
+                console.error(err);
+              }
+    })()
     },[])
-   
-    const [currentMonth,setCurrMonth] = useState(0);
-   
-    const firstDayOfMonth = data.dates[currentMonth] ? new Date(data.dates[currentMonth].days[0].date).getDay() : undefined;
-    const currentFullMonth = data.dates[currentMonth] ? new Date(data.dates[currentMonth].days[0].date).toLocaleString('default', { month: 'long' }) : undefined; 
-    const [currentMonthData, setCurrentMonthData] = useState({
-        ...data.dates[0]
+const [userName, setUserName] = useState('')
+const [userPhone, setUserPhone] = useState('')
+const [userQuantity, setQuantity] = useState('')
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(cookies.get('isMinuteLeft') )
+        const isMinuteLeft = cookies.get('isMinuteLeft') !== undefined ? cookies.get('isMinuteLeft') : true;
+        const date = document.querySelector('.c_checked') ? document.querySelector('.c_checked').id : false;
+        const time = document.querySelector('.m_checked') ? document.querySelector('.m_checked').id : false;
+        !time ? alert('Необходимо выбрать время!') : false;
+  
+        if (time && isMinuteLeft) {
+            console.log(isMinuteLeft)
+            let dataToSend = {
+                    date: date,
+                    time: time,
+                    name: userName,
+                    phone: userPhone,
+                    guest_quantity: userQuantity
+                }
+            try {
+                let res = await fetch('http://localhost/api/add_reservation/', {
+                  method: "POST",
+                  body: JSON.stringify(dataToSend),
+                  headers: {
+                    'Content-Type': 'application/json',
+                  }
+                });
+                let data = await res.json();
+                if(data.success) {
+                    alert('Мы успешно забронировали за вами столик!\nСкоро наш менеджер свяжется с вами для уточнения деталей.')
+                    document.cookie = "isMinuteLeft=false; max-age=60";
+                    location.reload()
+                } else if(!data.success) {
+                    alert('Что-то пошло не так, попытайтесь позже или позвоните нам по телефону');
+                    setUserName('')
+                    setUserPhone('')
+                    setQuantity('')
+                }
+              } catch (err) {
+                alert(err);
+              }
+        } else if (time && !isMinuteLeft) {
+            console.log(isMinuteLeft)
+            alert('Вы уже забронировали место, следующее бронирование откроется меньше чем через минуту')
+        }
+        
+    }
+
+    //setting state for 1 month
+    const [monthData, setMonthData] = useState({
+        month: now.getMonth() + 1,
+        days: [
+            {
+                date: `${now.getFullYear()}-${now.getMonth()+1}-01`,
+                is_vacant: false,
+                time_ranges: [
+                    {
+                        time: "",
+                        is_available: false
+                    },
+                    {
+                        time: "",
+                        is_available: false
+                    }
+                   
+                ]
+            }
+        ]
     })
+    
+    // setting month index for array (from 0 to 2)
+    const [currentMonthIndex, setCurrentMonthIndex] = useState(0)
+    const [monthName, setMonthName] = useState(now.toLocaleString('default', { month: 'long' }))
+    // useEffect for listening to general data update to set up 1 month data
+    const [currentSelectedDayIndex, setCurrentSelectedDayIndex] = useState(0)
+    useEffect(() => {
+        setMonthData(mockData ? {...mockData[0]} : [])
+        setFirstDayWeekIndex(monthData ? monthData.days ? new Date(monthData.days[0].date).getDay() : new Date(mockData[0].days[0].date).getDay() : 1)
+        setCurrentSelectedDayIndex(0)
+    },[mockData])
+    useEffect(() => {
+        setCurrentDayData(monthData ? monthData.days ? monthData.days[0] : {
+            date: `${now.getFullYear()}-${now.getMonth()+1}-01`,
+            is_vacant: true,
+            time_ranges: [
+                {
+                    time: "",
+                    is_available: false
+                }
+               
+            ]
+        } : {
+            date: `${now.getFullYear()}-${now.getMonth()+1}-01`,
+            is_vacant: true,
+            time_ranges: [
+                {
+                    time: "",
+                    is_available: false
+                }
+               
+            ]
+        } )
+        setMonthName(monthData.days ? new Date(monthData.days[0].date).toLocaleString('defautl', { month: 'long' }) : now.toLocaleString('default', { month: 'long' }));
+        setFirstDayWeekIndex(monthData.days ? new Date(monthData.days[0].date).getDay() : 1);
+    }, [monthData])
+    // //when user clicks on arrows - were setting month data and dayIndex to starting position 0
+    useEffect(() => {
+        setMonthData(mockData.length ? {...mockData[currentMonthIndex]}: []);  
+      
+        setCurrentSelectedDayIndex(0);
+        setCurrentDayData(monthData.days[0])
+    },[currentMonthIndex])
+   
+    const [currentDayData, setCurrentDayData] = useState( {
+        date: `${now.getFullYear()}-${now.getMonth()+1}-01`,
+        is_vacant: true,
+        time_ranges: [
+            {
+                time: "",
+                is_available: false
+            },
+            {
+                time: "",
+                is_available: false
+            }
+           
+        ]
+    } )
 
-    const [currentDay, setCurrDay] = useState(0) 
-    const [currentDayData, setCurrentDayData] = useState({
-        ...currentMonthData.days[0]
-    })
-    console.log(currentMonthData.month)
-    console.log(currentMonthData)
+    //when user clicks on any date (day) - listen for currentDayIndex change and change set up data (time ranges) for particular day
+    useEffect(() => {
+        setCurrentDayData(monthData.days[currentSelectedDayIndex])
+    }, [currentSelectedDayIndex])
 
-
+    const [selectedDay, setSelectedDay] = useState(0)
+    const [selectedTime,setSelectedTime] = useState(0)
+    // console.log('индекс месяца для обхода массива:', currentMonthIndex, '\nНазвание месяца: ', monthName, `\nДанные для месяца`, monthData, '\nИндекс первого дня недели:', firstDayWeekIndex || 7)
     return (
         <section className="l-section" id="booking">
         <h2 className="k__large">Бронирование</h2>
@@ -122,12 +175,12 @@ export default function Booking() {
                 <div className="b__booking_title">
                     Онлайн-бронирование
                 </div>
-                <form className="b__from_booking" id="form_booking" onSubmit={handleSubmit}>
+                <form className="b__from_booking" id="form_booking" onSubmit={(e) => {handleSubmit(e)}}>
                     <div className="b__form_rowTitle">Контакнтная информация</div>
                     <div className="f__input_wrapper">
-                        <input type="text" name="user_name" id="user_name" className="f__user_name" placeholder="Имя" />
-                        <input type="text" name="user_phone" id="user_phone" className="f__user_phone" placeholder="Телефон" />
-                        <input type="text" name="user_quantity" id="user_quantity" className="f__user_quantity" placeholder="Кол-во гостей" />
+                        <input required type="text" name="user_name" id="user_name" className="f__user_name" placeholder="Имя" value={userName} onChange={(e) => {setUserName(e.target.value)}}/>
+                        <input required type="number" name="user_phone" id="user_phone" className="f__user_phone" placeholder="Телефон" value={userPhone} onChange={(e) => {setUserPhone(e.target.value)}}/>
+                        <input required type="number" min={0} max={20} name="user_quantity" id="user_quantity" className="f__user_quantity" placeholder="Кол-во гостей" value={userQuantity} onChange={(e) => {setQuantity(e.target.value)}}/>
                     </div>
                
                 <div className="b__dateForSlide_container">
@@ -136,19 +189,23 @@ export default function Booking() {
                         <div className="b__calendar col-lg-5 col-12">
                             <div className="b__form_rowTitle">Дата</div>
                             <div className="b__monthTitle_wrapper">
-                                <div onClick={() => {setCurrMonth((currentMonth - 1) < 0 ? (data.dates.length - 1) : currentMonth - 1 ); handleNewMonthData()}} className="prev_btn">
-                                    <svg width="52" height="15" viewBox="0 0 52 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                               { mockData.length > 1 && <div className="prev_btn">
+                                    <svg key={0}  onClick={() => {currentMonthIndex - 1 < 0 ? setCurrentMonthIndex(2) : setCurrentMonthIndex(currentMonthIndex => ((currentMonthIndex - 1) % 3));
+         
+                                    }} width="52" height="15" viewBox="0 0 52 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1.13906 6.88005C0.748535 7.27058 0.748535 7.90374 1.13906 8.29426L7.50302 14.6582C7.89354 15.0488 8.52671 15.0488 8.91723 14.6582C9.30776 14.2677 9.30776 13.6345 8.91723 13.244L3.26038 7.58716L8.91723 1.9303C9.30776 1.53978 9.30776 0.906615 8.91723 0.51609C8.52671 0.125566 7.89354 0.125566 7.50302 0.51609L1.13906 6.88005ZM51.4615 6.58716L1.84616 6.58716V8.58716L51.4615 8.58716V6.58716Z" fill="black"/>
                                         </svg>
                                         
-                                </div>
-                                <div className="b_month">{currentFullMonth}</div>
-                                <div onClick={() => {setCurrMonth((currentMonth + 1) % data.dates.length === 0 ? 0 : currentMonth + 1 ); handleNewMonthData()}} className="next_btn">
-                                    <svg width="52" height="15" viewBox="0 0 52 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                </div> }    
+                                <div className="b_month" style={{textTransform: 'capitalize'}}>{monthName}</div>
+                                { mockData.length > 1 &&  <div  className="next_btn">
+                                    <svg key={1} onClick={() => {setCurrentMonthIndex(currentMonthIndex => ((currentMonthIndex + 1) % 3));
+                                   
+                                    }} width="52" height="15" viewBox="0 0 52 15" fill="none" xmlns="http://www.w3.org/2000/svg" >
                                         <path d="M51.0146 8.29426C51.4052 7.90374 51.4052 7.27058 51.0146 6.88005L44.6507 0.51609C44.2601 0.125566 43.627 0.125566 43.2365 0.51609C42.8459 0.906615 42.8459 1.53978 43.2365 1.9303L48.8933 7.58716L43.2365 13.244C42.8459 13.6345 42.8459 14.2677 43.2365 14.6582C43.627 15.0488 44.2601 15.0488 44.6507 14.6582L51.0146 8.29426ZM0.692139 8.58716H50.3075V6.58716H0.692139V8.58716Z" fill="black"/>
                                         </svg>
-                                </div>
-                            </div>
+                                </div>}
+                            </div> 
                             <div className="calendar">
                                 <div className="weekdays">
                                     <div className="day_name">ПН</div>
@@ -160,8 +217,8 @@ export default function Booking() {
                                     <div className="day_name">ВС</div>
                                 </div>
                                 <div className="days">
-                                {currentMonthData.days ? currentMonthData.days.map((item, index) => (
-                                        <div key={index } onClick={item.is_vacant ? (e) => handleDayClick(e,index) : undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''}`} style={index === 0 ? {gridColumn: firstDayOfMonth} : {}}>{new Date(item.date).getDate()}</div>
+                                {monthData.days && monthData.days.length ? monthData.days.map((item, index) => (
+                                        <div id={`${item.date}`} key={index} onClick={item.is_vacant ? () => {setCurrentSelectedDayIndex(index); setSelectedDay(index)}: undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''} ${selectedDay === index ? 'c_checked': ''}`} style={index === 0? {gridColumn: firstDayWeekIndex || 7} : {}}>{item.date !== "" ? new Date(item.date).getDate() : null}</div>
                                 )) : <><Loader /></>}
                                 </div>
                             </div>
@@ -169,8 +226,8 @@ export default function Booking() {
                         <div className="b__timeRanges col-lg-6 offset-lg-1 col-12">
                             <div className="b__form_rowTitle">Время</div>
                             <div className="b__timeRanges_container">
-                                {currentDayData.time_ranges ? currentDayData.time_ranges.map((item,index) => (
-                                    <div onClick={item.is_available ? (e) => handleTimeClick(e) : undefined} key={index} className={`time ${item.is_available ? 'm_available' : ''}`}>{item.time}</div>
+                                {currentDayData.time_ranges.length ? currentDayData.time_ranges.map((item,index) => (
+                                    <div id={`${item.time}`}  onClick={!item.is_available ? () => setSelectedTime(index): undefined} key={index} className={`time ${!item.is_available ? 'm_available' : ''} ${selectedTime == index && !item.is_available ? 'm_checked': ''}`}>{item.time}</div>
                                 )) : <><Loader /></>}
                             </div>
                         </div>

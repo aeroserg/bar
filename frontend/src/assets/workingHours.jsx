@@ -45,7 +45,6 @@ function WorkingHours() {
         }
     }
      const working_hours = useApiData(apiUrl, initialData);
-console.log(working_hours)
     return (
         <section className="l-section"  id="workingHours">
         <h2 className="k__large">Время работы</h2>

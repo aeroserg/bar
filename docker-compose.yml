@@ -10,6 +10,8 @@ services:
       - static_value:/app/static/
       - media_volume:/app/files/
     restart: always
+    networks:
+      - bar-network
 
   frontend:
     build: frontend/
@@ -44,3 +46,7 @@ services:
 volumes:
   static_value:
   media_volume:
+
+networks:
+  bar-network:
+    external: true

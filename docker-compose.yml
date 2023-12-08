@@ -11,7 +11,7 @@ services:
       - media_volume:/app/files/
     restart: always
     networks:
-      - external_network
+      - bar-network
 
   frontend:
     build: frontend/
@@ -22,6 +22,8 @@ services:
       - static_value:/app/static/
       - media_volume:/app/files/
     restart: always
+    networks:
+      - bar-network
 
   nginx:
     image: nginx:1.19.3
@@ -35,6 +37,8 @@ services:
     depends_on:
       - backend
       - frontend
+    networks:
+      - bar-network
 
   # cron:
   #   build: add_new_month/
@@ -48,6 +52,5 @@ volumes:
   media_volume:
 
 networks:
-  external_network:
-    external:
-      name: bar-network
+  bar-network:
+    external: true

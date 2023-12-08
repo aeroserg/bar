@@ -11,7 +11,7 @@ services:
       - media_volume:/app/files/
     restart: always
     networks:
-      - bar-network
+      - external_network
 
   frontend:
     build: frontend/
@@ -48,5 +48,6 @@ volumes:
   media_volume:
 
 networks:
-  bar-network:
-    external: true
+  external_network:
+    external:
+      name: bar-network

@@ -196,12 +196,12 @@ function Header({ mainColor }) {
                 </div>
                 <div className="b__nav d-none d-lg-flex">
                         <ul className="b__menu">
-                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}} href="/#aboutUs">О нас</a></li>
-                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href="/#menu">Меню</a></li>
-                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href="/#booking">Бронь</a></li>
-                            <li><a style={ mainColor ? {color:` ${mainColor}`} : {}}  href="/#interior">Фото</a></li>
-                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href="/#contacts">Контакты</a></li>
-                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href="/#workingHours">Часы работы</a></li>
+                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}} href={`${location.pathname == '/' ? '#aboutUs' : '/#aboutUs'}`}>О нас</a></li>
+                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href={`${location.pathname == '/' ? '#menu' : '/#menu'}`}>Меню</a></li>
+                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href={`${location.pathname == '/' ? '#booking' : '/#booking'}`}>Бронь</a></li>
+                            <li><a style={ mainColor ? {color:` ${mainColor}`} : {}}  href={`${location.pathname == '/' ? '#interior' : '/#interior'}`}>Фото</a></li>
+                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href={`${location.pathname == '/' ? '#contacts' : '/#contacts'}`}>Контакты</a></li>
+                            <li><a style={ mainColor ? {color: `${mainColor}`} : {}}  href={`${location.pathname == '/' ? '#workingHours' : '/#workingHours'}`}>Часы работы</a></li>
                         </ul>
                     <div className="b__phone">
                     <a style={ mainColor ? {color: `${mainColor}`} : {}}  href={`tel:${contacts.contacts.phone}`}>{contacts.contacts.phone}</a>

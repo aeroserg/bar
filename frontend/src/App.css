@@ -258,6 +258,9 @@ a.btn__call_to_action#about_us_btn{
     .mt-lg-10 {
         margin-top: 10rem;
     }
+    .b__timeRanges_container {
+        margin-top: 4rem;
+    }
 }
 .b__card_img img {
     aspect-ratio: 4.25 / 4.44;
@@ -571,6 +574,8 @@ input::placeholder {
     font-family: 'PlayFair Display', serif;
     color: #000000;
     padding: .2rem;
+    min-width: 75px;
+    text-align: center;
 }
 input#time_input_hidden {
     display: none;
@@ -714,18 +719,18 @@ button[type="submit"] {
     position: relative;
 }
 .burger_menu {
-    border: 5px solid #000000;
+    border: 2px solid #000000;
     padding: 0.6rem 0.6rem 0.5rem;
-    width: 60px;
-    background-color: #ff883e;
+    width: 45px;
+    background-color: #ffb282;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 15%;
     z-index: 100;
 }
 .b_menu_line {
     width: 100%;
-    height: 5px;
+    height: 2px;
     margin: .2rem 0;
     background-color: #000000;
 }
@@ -744,7 +749,7 @@ button[type="submit"] {
     transition: all 1s;
 }
 [data-opened="false"] {
-    transform: translateY(-1rem) translateX(85rem);
+    transform: translateY(-1rem) translateX(24rem);
     transition: all 1s;    
 }
 .sec-page {
@@ -1042,7 +1047,7 @@ button[type="submit"] {
         width: 100%;
     }
     .header__inner .logo svg {
-        width: 45%;
+        width: 58px;
         height: 100%;
     }
     .header__inner .logo svg path {
@@ -1059,9 +1064,20 @@ button[type="submit"] {
     .btn__call_to_action#about_us_btn {
         font-size: 26px;
     }
+    .b__timeRanges_container {
+        grid-gap: 1rem;
+    }
 }
 @media screen and (max-width: 760px) {
-    
+    .b__contatcs_title {
+        margin-bottom: .5rem;
+    }
+    .b__contacts_address::before,.b__contacts_workTime::before,.b__contacts_phone::before {
+        background-size: 30px;
+    }
+    .b__timeRanges_container {
+        grid-gap: 0;
+    }
     .b__menu_card {
         grid-column: auto / span 6!important;
         padding: 1rem;
@@ -1154,6 +1170,11 @@ button[type="submit"] {
         font-family: PlayFair Display,serif;
         color: #000;
         padding: 0.2rem;
+        min-width: 55px;
+        text-align: center;
+    }
+    .b__timeRanges {
+        margin-top: 1.5rem;
     }
     .b__timeRanges_container {
         display: grid;
@@ -1178,14 +1199,86 @@ button[type="submit"] {
         background-color: #ffffff;
         color: #000000!important;
     }
+    .l__main_section {
+        background-image: url(../img/bg_img.png);
+        background-position: top center;
+        background-repeat: no-repeat;
+        background-size: 200%;
+        padding: 3rem 0;
+        height: 100%;
+        min-height: 100%;
+    }
+    h1 {
+        font-size: 25px;
+        width: 100%;
+    }
+    p.primary_text {
+        font-size: 15px;
+    }
+    .main__text {
+        margin-right: 3rem;
+    }
+    .btn__wrapper {
+        text-align: center;
+
+    }
+    #main_sect_btn{
+        border: 2px solid #ffb282;
+        font-size: 20px!important;
+        background-color: #ffb282!important;
+    }
+    a.btn__call_to_action#about_us_btn {
+        font-size: 16px;
+        padding: 0.5rem 1rem;
+        border: 2px solid #FF883E;
+    }
+    #download_menu {
+        border: 2px solid #169B62;
+        width: fit-content;
+    }
+    .b__adv_grid {
+        display: flex;
+        align-items: center;
+        padding: 0rem 0;
+    }
+    #menu .btn__wrapper {
+        margin-top: 2rem;
+    }
+    .b__menu_title {
+        font-size: 32px!important;
+    }
+    .b__interier_description {
+        font-size: 16px;
+    }
+    .b__footer_contacts {
+        padding: 1rem 2rem;
+    }
 }
 @media screen and (max-width: 1400px) {
     .b__timetable_wrapper {
         font-size: 30px;
     }
+   
 }
 
 @media screen and (max-width: 560px) {
+    .l-section {
+        position: relative;
+        padding: 2rem 0;
+    }
+
+    .b__arrow_wrapper {
+        display: none;
+    }
+    .b__menu_title {
+        font-size: 27px!important;
+    }
+    .fixed_img {
+        position: absolute;
+        top: 34%;
+        left: -1%;
+        z-index: 0;
+    }
     a.btn__call_to_action#about_us_btn {
         font-size: 16px;
         padding: 0.5rem 1rem;
@@ -1201,7 +1294,12 @@ button[type="submit"] {
         min-height: 300px;
     }
     .link_to_menu {
-        height: 300px!important;
+        height: 100%!important;
+        padding: 0;
+        margin: 0;
+    }
+    .link_to_menu img {
+        width: 100%;
     }
     blockquote {
         font-size: 32px;
@@ -1242,10 +1340,10 @@ button[type="submit"] {
         margin-top: 2rem;
     }
     .b__form_inscription {
-        font-size: 20px;
+        font-size: 16px;
     }
     .b__booking_footerDescription {
-        font-size: 20px;
+        font-size: 18px;
         padding: 1rem;
         margin-top: 0;
         background-color: #d9d9d9
@@ -1265,7 +1363,7 @@ button[type="submit"] {
         margin-top: 2rem;
     }
     .b__timetable_wrapper {
-        font-size: 28px;
+        font-size: 22px;
     }
     .b__menu_title {
         font-size: 40px;

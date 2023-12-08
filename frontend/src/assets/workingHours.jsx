@@ -1,4 +1,3 @@
-import React from 'react';
 import useApiData from '../hooks/useApiData';
 
 
@@ -56,7 +55,7 @@ function WorkingHours() {
                 <div className="b__timetable_wrapper">
                     <div className="b__time_item">
                         <div className="b__time_day">
-                            Пн
+                            <span className='d-md-inline d-none'>Пн</span> <span className='d-inline d-md-none'>Понедельник</span>
                         </div>
                         <div className="b__workingHour">
                             {working_hours.working_hours.monday.is_vacation === false ? working_hours.working_hours.monday.start.substring(0,5) : 'Выходной'}
@@ -64,7 +63,7 @@ function WorkingHours() {
                     </div>
                     <div className="b__time_item">
                         <div className="b__time_day">
-                            Вт
+                        <span className='d-md-inline d-none'>Вт</span><span className='d-inline d-md-none'>Вторник</span>
                         </div>
                         <div className="b__workingHour">
                         {working_hours.working_hours.tuesday.is_vacation === false ? working_hours.working_hours.tuesday.start.substring(0,5) : 'Выходной'}
@@ -73,7 +72,7 @@ function WorkingHours() {
                     </div>
                     <div className="b__time_item">
                         <div className="b__time_day">
-                            Ср
+                        <span className='d-md-inline d-none'>Ср</span><span className='d-inline d-md-none'>Среда</span>
                         </div>
                         <div className="b__workingHour">
                         {working_hours.working_hours.wednesday.is_vacation === false ? working_hours.working_hours.wednesday.start.substring(0,5) : 'Выходной'}
@@ -82,7 +81,7 @@ function WorkingHours() {
                     </div>
                     <div className="b__time_item">
                         <div className="b__time_day">
-                            Чт
+                        <span className='d-md-inline d-none'>Чт</span><span className='d-inline d-md-none'>Четверг</span>
                         </div>
                         <div className="b__workingHour">
                         {working_hours.working_hours.thursday.is_vacation === false ? working_hours.working_hours.thursday.start.substring(0,5) : 'Выходной'}
@@ -91,7 +90,7 @@ function WorkingHours() {
                     </div>
                     <div className="b__time_item">
                         <div className="b__time_day">
-                            Пт
+                        <span className='d-md-inline d-none'>Пт</span><span className='d-inline d-md-none'>Пятница</span>
                         </div>
                         <div className="b__workingHour">
                         {working_hours.working_hours.friday.is_vacation === false ? working_hours.working_hours.friday.start.substring(0,5) : 'Выходной'}
@@ -100,7 +99,7 @@ function WorkingHours() {
                     </div>
                     <div className="b__time_item">
                         <div className="b__time_day">
-                            Сб
+                        <span className='d-md-inline d-none'>Сб</span><span className='d-inline d-md-none'>Суббота</span>
                         </div>
                         <div className="b__workingHour">
                         {working_hours.working_hours.saturday.is_vacation === false ? working_hours.working_hours.saturday.start.substring(0,5) : 'Выходной'}
@@ -109,7 +108,7 @@ function WorkingHours() {
                     </div>
                     <div className="b__time_item">
                         <div className="b__time_day">
-                            Вс
+                        <span className='d-md-inline d-none'>Вс</span><span className='d-inline d-md-none'>Воскресенье</span>
                         </div>
                         <div className="b__workingHour">
                         {working_hours.working_hours.sunday.is_vacation === false ? working_hours.working_hours.sunday.start.substring(0,5) : 'Выходной'}

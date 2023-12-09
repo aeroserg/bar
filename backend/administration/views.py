@@ -190,6 +190,23 @@ class AddReservationView(APIView):
         setattr(date_reservation, f'{time}_phone_number', phone)
         date_reservation.save()
 
+        queryset_email_cred = SendEmailSettings.objects.all()
+        email_creds = model_to_dict(queryset_email_cred[0])
+
+        SendMail(host=email_creds['host'],
+                 port=email_creds['port'],
+                 email_address_from=email_creds['email_address_from'],
+                 email_password=email_creds['email_password'],
+                 email_address_to=email_creds['email_address_to'],
+                 message=f"""
+                 Имя: {name}
+                 Количество гостей: {guest_quantity}
+                 Номер телефона: {phone}
+                 Дата: {date}
+                 Время: {time}
+                 """,
+                 subject=f'Новое бронирование {date_reservation.date} {time}')
+
         return Response({'success': True})
 
 

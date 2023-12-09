@@ -25,7 +25,7 @@ class SendMail:
     def send_email(self):
         try:
             msg = EmailMessage()
-            msg['Subject'] = 'New order: ' + self.subject
+            msg['Subject'] = self.subject
             msg['From'] = self.email_address_from
             msg['To'] = self.email_address_to
             msg.set_content(self.message_text)

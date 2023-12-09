@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.http import HttpResponseRedirect
-from django.shortcuts import reverse
 
 from .models import *
 
@@ -85,7 +83,8 @@ class ReservationAdmin(admin.ModelAdmin):
 
 @admin.register(SendEmailSettings)
 class SendEmailSettingsAdmin(admin.ModelAdmin):
-    pass
+    def has_add_permission(self, *args, **kwargs):
+        return not SendEmailSettings.objects.exists()
 
 
 @admin.register(EmailMessage)

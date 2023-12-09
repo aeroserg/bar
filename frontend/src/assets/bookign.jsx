@@ -22,7 +22,7 @@ export default function Booking() {
 
     const now = new Date();
     const cookies = new Cookies();
-    const csrftoken = cookies.get('csrftoken') || document.querySelector('csrfToken').value || document.querySelector('csrftoken').value || 'P85fgk6I9W4Wf2LpZjGCGQAXef89IiP6';
+    const csrftoken = cookies.get('csrftoken') || 'P85fgk6I9W4Wf2LpZjGCGQAXef89IiP6';
 
     // set uo mockdata from api, requseting server for data just 1 time, so no dependences in the useEffect array
     const [mockData, setData] = useState([])

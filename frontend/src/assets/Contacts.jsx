@@ -2,7 +2,6 @@
 import React from 'react';
 import useApiData from '../hooks/useApiData';
 const HOST = location.protocol + '//' + location.host
-
 export default function Contacts() {
     const apiUrl = `${HOST}/api/contacts/`;
     const initialData = {
@@ -15,8 +14,7 @@ export default function Contacts() {
         <div className="container">
             <div className="b__contacts_wrapper">
                 <div className="b__map_wrapper">
-                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad6896d75c51a79573a3863ba9047c90f57db4f0e291c5bdddcfefef0e0c9c7cb&amp;source=constructor" width="100%" height="623" frameBorder="0"></iframe>
-                </div>
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad6896d75c51a79573a3863ba9047c90f57db4f0e291c5bdddcfefef0e0c9c7cb&amp;source=constructor" width="100%" height="623" frameBorder="0"></iframe>                </div>
                 <div className="b__footer_contacts">
                     <div className="b__contatcs_title">Наши контакты</div>
                    {contacts.contacts.address ? <div className="b__contacts_address">{contacts.contacts.address}</div>  : <></>}

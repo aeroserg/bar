@@ -5,7 +5,7 @@ services:
     build: backend/
     container_name: backend
     ports:
-      - "8000:8000"
+      - "3001:3001"
     volumes:
       - static_value:/app/static/
       - media_volume:/app/files/

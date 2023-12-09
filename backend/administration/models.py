@@ -69,10 +69,7 @@ class Reservation(models.Model):
         return name_object
 
 
-class Days(models.Model):
-    month = models.ForeignKey(Reservation, default=None, on_delete=models.CASCADE)
-    date = models.DateField(default=None)
-
+class DayContent(models.Model):
     for hour in range(12, 24):
         for minute in range(0, 60, 30):
             time_str = f"{hour:02d}:{minute:02d}"
@@ -80,6 +77,16 @@ class Days(models.Model):
             locals()[f'{time_str}_guests_quantity'] = models.IntegerField(blank=True, null=True)
             locals()[f'{time_str}_name'] = models.CharField(max_length=400, blank=True, null=True)
             locals()[f'{time_str}_phone_number'] = models.CharField(max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        name_object = 'Расписание на день'
+        return name_object
+
+
+class Days(models.Model):
+    month = models.ForeignKey(Reservation, default=None, on_delete=models.CASCADE)
+    date = models.DateField(default=None)
+    day_content = models.ForeignKey(DayContent, on_delete=models.CASCADE)
 
 
 class SendEmailSettings(models.Model):

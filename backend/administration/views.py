@@ -6,7 +6,7 @@ import datetime
 from calendar import monthrange
 
 from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
-                     WorkTime, Reservation, Days, MenuPDF)
+                     WorkTime, Reservation, Days, MenuPDF, DayContent)
 from .send_mail import SendMail
 
 
@@ -19,7 +19,7 @@ class GetAboutView(APIView):
                     "description": about_content.description,
                     "photo": about_content.photo.file.name.replace('/app', '')
                 }
-        }
+            }
         )
 
 
@@ -181,19 +181,20 @@ class AddReservationView(APIView):
         phone = request.data['phone']
         guest_quantity = int(request.data['guest_quantity'])
 
-        date_reservation = Days.objects.get(date=date)
-        if getattr(date_reservation, time):
+        day_reservation = Days.objects.get(date=date)
+        time_reservation = DayContent.objects.get(id=day_reservation.day_content.id)
+        if getattr(time_reservation, time):
             return Response({'success': False})
-        setattr(date_reservation, time, True)
-        setattr(date_reservation, f'{time}_guests_quantity', guest_quantity)
-        setattr(date_reservation, f'{time}_name', name)
-        setattr(date_reservation, f'{time}_phone_number', phone)
-        date_reservation.save()
+        setattr(time_reservation, time, True)
+        setattr(time_reservation, f'{time}_guests_quantity', guest_quantity)
+        setattr(time_reservation, f'{time}_name', name)
+        setattr(time_reservation, f'{time}_phone_number', phone)
+        time_reservation.save()
 
         queryset_email_cred = SendEmailSettings.objects.all()
         email_creds = model_to_dict(queryset_email_cred[0])
 
-        SendMail(host=email_creds['host'],
+        send_mail = SendMail(host=email_creds['host'],
                  port=email_creds['port'],
                  email_address_from=email_creds['email_address_from'],
                  email_password=email_creds['email_password'],
@@ -205,7 +206,8 @@ class AddReservationView(APIView):
                  Дата: {date}
                  Время: {time}
                  """,
-                 subject=f'Новое бронирование {date_reservation.date} {time}')
+                 subject=f'Новое бронирование {date} {time}')
+        send_mail.send_email()
 
         return Response({'success': True})
 
@@ -258,11 +260,13 @@ class GenInitReservationView(APIView):
             days_in_month = monthrange(value.year, value.month)[1]
 
             for i in range(days_in_month):
-                d = Days(month=r, date=datetime.date(value.year, value.month, i+1))
+                day_content = DayContent()
                 for hour in range(12, 24):
                     for minute in range(0, 60, 30):
                         time_str = f"{hour:02d}:{minute:02d}"
-                        setattr(d, time_str, False)
+                        setattr(day_content, time_str, False)
+                day_content.save()
+                d = Days(month=r, date=datetime.date(value.year, value.month, i + 1), day_content=day_content)
                 d.save()
 
         return Response({"Success": True})
@@ -274,7 +278,30 @@ class GetMenuPDFView(APIView):
         return Response({"menu_pdf_path": menu_pdf.menu.path.replace('/app', '')})
 
 
+class AddNewMonth(APIView):
+    def get(self, request):
+        reservation = Reservation.objects.all().order_by('id')
+        reservation[0].delete()
+        current_date = datetime.datetime.today()
+        second_month_date = current_date.month % 12 + 2
+        second_year_date = current_date.year
+        if second_month_date < current_date.month:
+            second_year_date += 1
+        second_month = datetime.date(second_year_date, second_month_date, 1)
+        month_name = second_month.strftime('%B')
 
-# class AddNewMonth(APIView):
-#     def get(self, request):
-#         reservation = Reservation.objects.get.
+        r = Reservation(month=month_name)
+        r.save()
+        days_in_month = monthrange(second_year_date, second_month_date)[1]
+
+        for i in range(days_in_month):
+            day_content = DayContent()
+            for hour in range(12, 24):
+                for minute in range(0, 60, 30):
+                    time_str = f"{hour:02d}:{minute:02d}"
+                    setattr(day_content, time_str, False)
+            day_content.save()
+            d = Days(month=r, date=datetime.date(second_year_date, second_month_date, i + 1), day_content=day_content)
+            d.save()
+
+        return Response({"Success": True})

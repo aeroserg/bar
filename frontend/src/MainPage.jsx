@@ -27,7 +27,7 @@ export default function App() {
                 <div className="text__description">
                     <p className="primary_text"> Аутентичные блюда, приготовленные
                         из самых свежих ингредиентов 
-                        и удивительная ирландская атмосфера</p>
+                        и удивительная атмосфера</p>
                 </div>
             </div> 
             <div className="btn__wrapper ">

@@ -6,7 +6,6 @@
  * @var monthData Object
  */
 
-// eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from 'react';
 import Loader from './modals'
 import axios from "axios";

@@ -14,7 +14,6 @@ import Cookies from 'universal-cookie';
 import useApiData from '../hooks/useApiData';
 
 const HOST = location.protocol + '//' + location.host
-
 export default function Booking() {
     const apiUrl = `${HOST}/api/contacts/`;
     const initialData = {
@@ -24,6 +23,8 @@ export default function Booking() {
 
     const now = new Date();
     const cookies = new Cookies();
+    const csrftoken = cookies.get('csrftoken') || document.querySelector('csrfToken').value || document.querySelector('csrftoken').value
+
     // set uo mockdata from api, requseting server for data just 1 time, so no dependences in the useEffect array
     const [mockData, setData] = useState([])
     const [firstDayWeekIndex, setFirstDayWeekIndex] = useState(1)
@@ -60,9 +61,11 @@ const [userQuantity, setQuantity] = useState('')
             try {
                 let res = await fetch(`${HOST}/api/add_reservation/`, {
                   method: "POST",
+                  
                   body: JSON.stringify(dataToSend),
                   headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
                   }
                 });
                 let data = await res.json();
@@ -71,7 +74,7 @@ const [userQuantity, setQuantity] = useState('')
                     document.cookie = "isMinuteLeft=false; max-age=60";
                     location.reload()
                 } else if(!data.success) {
-                    alert('Что-то пошло не так, попытайтесь позже или позвоните нам по телефону');
+                    alert('Что-то пошло не так! Обращаем внимание, что если вы находитесь в режиме инкогнито, заброировать место не получится. Попытайтесь позже или позвоните нам по телефону');
                     setUserName('')
                     setUserPhone('')
                     setQuantity('')
@@ -81,7 +84,7 @@ const [userQuantity, setQuantity] = useState('')
               }
         } else if (time && !isMinuteLeft) {
             console.log(isMinuteLeft)
-            alert('Вы уже забронировали место, следующее бронирование откроется меньше чем через минуту')
+            alert('Вы уже забронировали место, следующее бронирование откроется уже меньше чем через минуту')
         }
         
     }

@@ -1268,6 +1268,18 @@ button[type="submit"] {
     .b__footer_contacts {
         padding: 1rem 2rem;
     }
+    blockquote::before {
+        content: '';
+        width: 18px;
+        height: 18px;
+        background-size: 100%;
+    }
+    blockquote::after {
+        content: '';
+        width: 18px;
+        height: 18px;
+        background-size: 100%;
+    }
 }
 @media screen and (max-width: 1400px) {
     .b__timetable_wrapper {
@@ -1277,6 +1289,9 @@ button[type="submit"] {
 }
 
 @media screen and (max-width: 560px) {
+    .link_to_menu {
+        border: none!important;
+    }
     .b__item_text {
         max-width: 55%;
         padding: 0 .5rem;
@@ -1321,9 +1336,13 @@ button[type="submit"] {
     .link_to_menu img {
         width: 100%;
     }
-    blockquote {
-        font-size: 32px;
-        line-height: 38px;
+    blockquote {    
+        font-size: 19px;
+        line-height: 25px;
+    }
+    .b__undertext p {
+        font-weight: 700;
+        font-size: 11px;
     }
     .k__medium::after, .k__medium::before{
         content: '';

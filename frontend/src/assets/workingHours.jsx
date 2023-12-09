@@ -1,9 +1,10 @@
 import useApiData from '../hooks/useApiData';
 
+const HOST = location.protocol + '//' + location.host
 
 function WorkingHours() {
 
-    const apiUrl = 'http://localhost/api/working_hours/';
+    const apiUrl = `${HOST}/api/api/working_hours/`;
     const initialData = {
         working_hours: {
             monday: {

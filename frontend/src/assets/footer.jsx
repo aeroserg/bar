@@ -1,9 +1,9 @@
-import React from 'react';
 import useApiData from '../hooks/useApiData';
+const HOST = location.protocol + '//' + location.host
 
 function Footer() {
 
-    const apiUrl = 'http://localhost/api/contacts/';
+    const apiUrl = `${HOST}/api/api/contacts/`;
     const initialData = {
         "contacts": {}
     };

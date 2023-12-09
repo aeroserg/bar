@@ -1,7 +1,8 @@
 import useApiData from '../hooks/useApiData';
+const HOST = location.protocol + '//' + location.host
 
 function AboutUs() {
-    const apiUrl = 'http://localhost/api/about/';
+    const apiUrl = `${HOST}/api/api/about/`;
     const initialData = {
         "about": {}
     };

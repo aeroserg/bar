@@ -11,9 +11,17 @@ import { useEffect, useState } from 'react';
 import Loader from './modals'
 import axios from "axios";
 import Cookies from 'universal-cookie';
+import useApiData from '../hooks/useApiData';
 
+const HOST = location.protocol + '//' + location.host
 
 export default function Booking() {
+    const apiUrl = `${HOST}/api/api/contacts/`;
+    const initialData = {
+        "contacts": {}
+    };
+     const contacts = useApiData(apiUrl, initialData);
+
     const now = new Date();
     const cookies = new Cookies();
     // set uo mockdata from api, requseting server for data just 1 time, so no dependences in the useEffect array
@@ -22,7 +30,7 @@ export default function Booking() {
     useEffect(() => {
         ( async () => {
             try {
-                const { data } = await axios("http://localhost/api/get_reservation/");
+                const { data } = await axios(`${HOST}/api/api/get_reservation/`);
                 setData(data.dates)                
               } catch (err) {
                 console.error(err);
@@ -50,7 +58,7 @@ const [userQuantity, setQuantity] = useState('')
                     guest_quantity: userQuantity
                 }
             try {
-                let res = await fetch('http://localhost/api/add_reservation/', {
+                let res = await fetch(`${HOST}/api/add_reservation/`, {
                   method: "POST",
                   body: JSON.stringify(dataToSend),
                   headers: {
@@ -241,7 +249,7 @@ const [userQuantity, setQuantity] = useState('')
                         <button type="submit">Забронировать</button>
                     </div>
                     <div className="b__form_inscription col-md-5 col-12">
-                        Вы также можете забронировать стол, позвонив по номиеру <a href="tel:+7-999-999-99-99">+7-999-999-99-99</a> 
+                        Вы также можете забронировать стол, позвонив по номиеру <a href={`tel:${contacts.contacts.phone}`}>{contacts.contacts.phone}</a> 
                     </div>
                 </form>
                 

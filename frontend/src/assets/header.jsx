@@ -1,8 +1,9 @@
 import useApiData from '../hooks/useApiData';
 import { useState } from 'react';
+const HOST = location.protocol + '//' + location.host
 
 function Header({ mainColor }) {
-    const apiUrl = 'http://localhost/api/contacts/';
+    const apiUrl = `${HOST}/api/api/contacts/`;
     const initialData = {
         "contacts": {}
     };

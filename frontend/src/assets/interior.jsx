@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import $ from 'jquery';
-
+const HOST = location.protocol + '//' + location.host
 
 function Interior() {
      const [interiorData, setData] = useState({
@@ -12,7 +12,7 @@ function Interior() {
      const [photoCount, setCount] = useState(0)
      const [currentPhoto, setNewPhoto] = useState(0)
     useEffect(() =>{
-        fetch('http://localhost/api/interior/')
+        fetch(`${HOST}/api/api/interior/`)
         .then(response => response.json())
         .then(data => {
           setData(data);

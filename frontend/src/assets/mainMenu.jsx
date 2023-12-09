@@ -1,8 +1,9 @@
 import useApiData from '../hooks/useApiData';
+const HOST = location.protocol + '//' + location.host
 
 export default function MainMenu() {
 
-    const apiUrl = 'http://localhost/api/menu/';
+    const apiUrl = `${HOST}/api/api/menu/`;
     const initialData = {
         "menu": []
     };

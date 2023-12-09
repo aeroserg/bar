@@ -42,4 +42,4 @@ function WhyUs() {
     )
 }
 
-export default WhyUs
+export default WhyUs;

@@ -1,5 +1,4 @@
 import Header from './assets/header'
-import useApiData from './hooks/useApiData'
 function NotFound() {
     return (
         <>

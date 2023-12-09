@@ -1069,6 +1069,13 @@ button[type="submit"] {
     }
 }
 @media screen and (max-width: 760px) {
+    .b__item_text {
+        max-width: 55%;
+        padding: 0 .5rem;
+    }
+    .b__item_img {
+        width: 50%;
+    }
     .b__contatcs_title {
         margin-bottom: .5rem;
     }
@@ -1262,6 +1269,11 @@ button[type="submit"] {
 }
 
 @media screen and (max-width: 560px) {
+    .b__item_text {
+        max-width: 55%;
+        padding: 0 .5rem;
+        font-size: 20px;
+    }
     .l-section {
         position: relative;
         padding: 2rem 0;

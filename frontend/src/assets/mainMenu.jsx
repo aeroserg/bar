@@ -3,10 +3,11 @@ const HOST = location.protocol + '//' + location.host
 
 export default function MainMenu() {
 
-    const apiUrl = `${HOST}/api/api/menu/`;
+    const apiUrl = `${HOST}/api/menu/`;
     const initialData = {
         "menu": []
     };
+    const menuLinkData = useApiData(`${HOST}/api/download_menu/`, {menu_pdf_path: ''})
      const munuData = useApiData(apiUrl, initialData);
      const slicedMenuData = munuData.menu ? munuData.menu.slice(0, 4) : [];
     return (
@@ -47,7 +48,7 @@ export default function MainMenu() {
                 </div>
             </div>
             <div className="btn__wrapper d-flex justify-content-between flex-row">
-                <a className="btn__call_to_action" id="download_menu" href="#booking">Скачать меню</a>
+                <a className="btn__call_to_action" target='_blank' rel="noreferrer" id="download_menu" href={menuLinkData.menu_pdf_path}>Скачать меню</a>
                 <a className="btn__call_to_action" id="about_us_btn" href="#booking">Забронировать</a>
 
             </div>

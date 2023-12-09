@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import Footer from './assets/footer';
 import Header from './assets/header'
 import useScript from "./hooks/useScript";
+import useApiData from "./hooks/useApiData";
 import './bootstrap.css'
 import './App.css'
+const HOST = location.protocol + '//' + location.host
 
 export default function MenuPage() {
     const [data, setData] = useState({
         menu:[]
     })
     useEffect(() => {
-        fetch('http://localhost/api/menu/')
+        fetch(`${HOST}/api/menu/`)
         .then(response => response.json())
         .then(data => {
             setData(data);
         })
     },[])
+    const menuLinkData = useApiData(`${HOST}/api/download_menu/`, {menu_pdf_path: ''})
 
     return (
         <>
@@ -46,7 +49,7 @@ export default function MenuPage() {
                                 <div className="b__card_img mb-5">
                                     Вы можете посмотреть меню здесь или скачать PDF по кнопке ниже
                                 </div>
-                                <a className="btn__call_to_action sec-page" id="download_menu" href="#">Скачать меню</a>
+                                <a className="btn__call_to_action sec-page" target="_blank" rel="noreferrer" id="download_menu" href={menuLinkData.menu_pdf_path}>Скачать меню</a>
                         </div> : ''}
             
                         </>

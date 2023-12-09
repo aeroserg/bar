@@ -12,7 +12,7 @@ function Interior() {
      const [photoCount, setCount] = useState(0)
      const [currentPhoto, setNewPhoto] = useState(0)
     useEffect(() =>{
-        fetch(`${HOST}/api/api/interior/`)
+        fetch(`${HOST}/api/interior/`)
         .then(response => response.json())
         .then(data => {
           setData(data);

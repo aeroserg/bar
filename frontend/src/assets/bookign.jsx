@@ -16,7 +16,7 @@ import useApiData from '../hooks/useApiData';
 const HOST = location.protocol + '//' + location.host
 
 export default function Booking() {
-    const apiUrl = `${HOST}/api/api/contacts/`;
+    const apiUrl = `${HOST}/api/contacts/`;
     const initialData = {
         "contacts": {}
     };
@@ -30,7 +30,7 @@ export default function Booking() {
     useEffect(() => {
         ( async () => {
             try {
-                const { data } = await axios(`${HOST}/api/api/get_reservation/`);
+                const { data } = await axios(`${HOST}/api/get_reservation/`);
                 setData(data.dates)                
               } catch (err) {
                 console.error(err);

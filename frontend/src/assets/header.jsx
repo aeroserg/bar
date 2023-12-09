@@ -3,7 +3,7 @@ import { useState } from 'react';
 const HOST = location.protocol + '//' + location.host
 
 function Header({ mainColor }) {
-    const apiUrl = `${HOST}/api/api/contacts/`;
+    const apiUrl = `${HOST}/api/contacts/`;
     const initialData = {
         "contacts": {}
     };

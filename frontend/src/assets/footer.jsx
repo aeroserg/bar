@@ -3,7 +3,7 @@ const HOST = location.protocol + '//' + location.host
 
 function Footer() {
 
-    const apiUrl = `${HOST}/api/api/contacts/`;
+    const apiUrl = `${HOST}/api/contacts/`;
     const initialData = {
         "contacts": {}
     };

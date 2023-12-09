@@ -12,5 +12,6 @@ urlpatterns = [
     path('working_hours/', views.WorkingHoursView.as_view()),
     path('get_reservation/', views.GetReservationView.as_view()),
     path('add_reservation/', views.AddReservationView.as_view()),
-    path('init_reservation/', views.GenInitReservationView.as_view())
+    path('init_reservation/', views.GenInitReservationView.as_view()),
+    path('add_new_month/', views.AddNewMonth.as_view())
 ]

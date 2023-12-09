@@ -81,6 +81,12 @@ class ReservationAdmin(admin.ModelAdmin):
         model = Reservation
 
 
+@admin.register(DayContent)
+class DayContentAdmin(admin.ModelAdmin):
+    def get_model_perms(self, request):
+        return {}
+
+
 @admin.register(SendEmailSettings)
 class SendEmailSettingsAdmin(admin.ModelAdmin):
     def has_add_permission(self, *args, **kwargs):

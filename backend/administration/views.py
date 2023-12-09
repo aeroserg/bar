@@ -6,7 +6,7 @@ import datetime
 from calendar import monthrange
 
 from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
-                     WorkTime, Reservation, Days)
+                     WorkTime, Reservation, Days, MenuPDF)
 from .send_mail import SendMail
 
 
@@ -177,11 +177,17 @@ class AddReservationView(APIView):
     def post(self, request):
         date = request.data['date']
         time = request.data['time']
+        name = request.data['name']
+        phone = request.data['phone']
+        guest_quantity = int(request.data['guest_quantity'])
 
         date_reservation = Days.objects.get(date=date)
         if getattr(date_reservation, time):
             return Response({'success': False})
         setattr(date_reservation, time, True)
+        setattr(date_reservation, f'{time}_guests_quantity', guest_quantity)
+        setattr(date_reservation, f'{time}_name', name)
+        setattr(date_reservation, f'{time}_phone_number', phone)
         date_reservation.save()
 
         return Response({'success': True})
@@ -214,11 +220,19 @@ class GenInitReservationView(APIView):
         first_month_name = current_date.strftime('%B')
         month_names[first_month_name] = current_date
 
-        second_month = datetime.date(current_date.year, current_date.month % 12 + 1, 1)
+        second_month_date = current_date.month % 12 + 1
+        second_year_date = current_date.year
+        if second_month_date < current_date.month:
+            second_year_date += 1
+        second_month = datetime.date(second_year_date, second_month_date, 1)
         second_month_name = second_month.strftime('%B')
         month_names[second_month_name] = second_month
 
-        third_month = datetime.date(second_month.year, second_month.month % 12 + 1, 1)
+        third_month_date = second_month.month % 12 + 1
+        third_year_date = second_month.year
+        if third_month_date < second_month.month:
+            third_year_date += 1
+        third_month = datetime.date(third_year_date, third_month_date, 1)
         third_month_name = third_month.strftime('%B')
         month_names[third_month_name] = third_month
         for key, value in month_names.items():
@@ -235,6 +249,13 @@ class GenInitReservationView(APIView):
                 d.save()
 
         return Response({"Success": True})
+
+
+class GetMenuPDFView(APIView):
+    def get(self, request):
+        menu_pdf = MenuPDF.objects.first()
+        return Response({"menu_pdf_path": menu_pdf.menu.path.replace('/app', '')})
+
 
 
 # class AddNewMonth(APIView):

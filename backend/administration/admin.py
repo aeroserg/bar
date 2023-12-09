@@ -37,6 +37,12 @@ class MenuAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(MenuPDF)
+class MenuPDFAdmin(admin.ModelAdmin):
+    def has_add_permission(self, *args, **kwargs):
+        return not MenuPDF.objects.exists()
+
+
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     def has_add_permission(self, *args, **kwargs):
@@ -64,6 +70,9 @@ class Days(admin.ModelAdmin):
 
     class Meta:
         model = Days
+
+    def get_model_perms(self, request):
+        return {}
 
 
 @admin.register(Reservation)

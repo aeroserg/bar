@@ -7,6 +7,7 @@ urlpatterns = [
     path('about/', views.GetAboutView.as_view()),
     path('interior/', views.GetInteriorView.as_view()),
     path('menu/', views.MenuView.as_view()),
+    path('download_menu/', views.GetMenuPDFView.as_view()),
     path('contacts/', views.ContactView.as_view()),
     path('working_hours/', views.WorkingHoursView.as_view()),
     path('get_reservation/', views.GetReservationView.as_view()),

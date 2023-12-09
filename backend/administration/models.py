@@ -64,6 +64,10 @@ class Reservation(models.Model):
 
     month = models.CharField(max_length=9, choices=MONTH_CHOICES, default='January')
 
+    def __str__(self):
+        name_object = self.month
+        return name_object
+
 
 class Days(models.Model):
     month = models.ForeignKey(Reservation, default=None, on_delete=models.CASCADE)
@@ -73,6 +77,9 @@ class Days(models.Model):
         for minute in range(0, 60, 30):
             time_str = f"{hour:02d}:{minute:02d}"
             locals()[time_str] = models.BooleanField()
+            locals()[f'{time_str}_guests_quantity'] = models.IntegerField(blank=True, null=True)
+            locals()[f'{time_str}_name'] = models.CharField(max_length=400, blank=True, null=True)
+            locals()[f'{time_str}_phone_number'] = models.CharField(max_length=20, blank=True, null=True)
 
 
 class SendEmailSettings(models.Model):
@@ -92,3 +99,7 @@ class SendEmailSettings(models.Model):
 
 class EmailMessage(models.Model):
     message = models.TextField()
+
+
+class MenuPDF(models.Model):
+    menu = models.FileField(upload_to='menu_pdf/')

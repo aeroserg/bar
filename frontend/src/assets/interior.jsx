@@ -64,8 +64,8 @@ function Interior() {
             }
         }
     }
-    return (
-        <section className="l-section"  id="interior">
+    return ( <>
+        {interiorData.interior.interior_imgs.length && <section className="l-section"  id="interior">
             <h2 className="k__medium">Интерьер</h2>
             <div className="container-xl">
                 <div className="b__interier_wrapper">
@@ -77,7 +77,7 @@ function Interior() {
                     </div>
                     <div className="b__interier_photo col-lg-7 col-12 d-none d-lg-flex">
                         
-                        {interiorData.interior.length !== 0 ? interiorData.interior.interior_imgs.map((item, index) => (
+                        {interiorData.interior.interior_imgs.map((item, index) => (
                             <div key={index+1} id={index} className="b_interier_item" onMouseOver={(event) => (updatePhotoLayer(event))}>
                                 <div className="b__itemPhoto">
                                     <img src={item.photo} alt={item.photo_description} />
@@ -86,7 +86,7 @@ function Interior() {
                                     {item.photo_description}
                                 </div>
                             </div>
-                        )) : " "}
+                        ))}
                     </div>
 
                     {/* for mobile (less than 992) */}
@@ -113,7 +113,8 @@ function Interior() {
 
                 </div>
             </div>
-        </section>
+        </section>}
+        </>
     ) 
 
 }

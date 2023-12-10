@@ -536,6 +536,7 @@ input::placeholder {
     margin: .4rem .2rem;
     color: #858585;
     font-weight: 400;
+    cursor: pointer;
 }
 .b__dateForSlide_item {
     display: flex!important;
@@ -576,6 +577,7 @@ input::placeholder {
     padding: .2rem;
     min-width: 75px;
     text-align: center;
+    cursor: pointer;
 }
 input#time_input_hidden {
     display: none;
@@ -602,6 +604,9 @@ footer {
     background-color: #00000099;
     background-size: cover;
     background-position: center bottom;
+}
+.next_btn, .prev_btn {
+    cursor: pointer;
 }
 footer {
     padding: 5rem 0;

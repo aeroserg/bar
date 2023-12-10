@@ -229,6 +229,7 @@ class EmailMessageView(APIView):
                              email_address_to=email_creds['email_address_to'],
                              message=message,
                              subject=subject)
+        print(send_mail)
 
         return Response({"Send email success": send_mail.send_email()})
 

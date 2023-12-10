@@ -1,5 +1,7 @@
 import smtplib
 from email.message import EmailMessage
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 class SendMail:
@@ -24,18 +26,19 @@ class SendMail:
 
     def send_email(self):
         try:
-            msg = EmailMessage()
-            msg['Subject'] = self.subject
-            msg['From'] = self.email_address_from
-            msg['To'] = self.email_address_to
-            msg.set_content(self.message_text)
+            message = MIMEMultipart()
+            message['From'] = self.email_address_from
+            message['To'] = self.email_address_to
+            message['Subject'] = self.subject
 
-            server = smtplib.SMTP(f'{self.host}:{self.port}')
-            server.starttls()
-            server.login(self.email_address_from, self.email_password)
-            print('server connected successful')
-            server.send_message(msg)
-            server.quit()
+            message.attach(MIMEText(self.message_text, 'plain'))
+
+            print(f'{self.host}:{self.port}')
+            with smtplib.SMTP_SSL(f'{self.host}:{self.port}') as server:
+                print(server)
+                server.login(self.email_address_from, self.email_password)
+                print('server connected successful')
+                server.send_message(message)
             return 'Message send successful'
         except:
             return 'An error occurred while sending the message'

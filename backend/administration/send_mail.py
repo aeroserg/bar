@@ -33,6 +33,7 @@ class SendMail:
             server = smtplib.SMTP(f'{self.host}:{self.port}')
             server.starttls()
             server.login(self.email_address_from, self.email_password)
+            print('server connected successful')
             server.send_message(msg)
             server.quit()
             return 'Message send successful'

@@ -26,20 +26,29 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
       - static_value:/app/static/
       - media_volume:/app/files/
     depends_on:
       - backend
       - frontend
 
-  # cron:
-  #   build: add_new_month/
-  #   container_name: cron
-  #   ports:
-  #     - "9000:9000"
-  #   restart: always
+  certbot:
+    image: certbot/cerbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+
+  cron:
+   build: add_new_month/
+   container_name: cron
+   ports:
+     - "9000:9000"
+   restart: always
 
 volumes:
   static_value:

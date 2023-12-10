@@ -1,23 +1,26 @@
 import schedule
 import time
 import requests
+from datetime import date
 
 
-def generate_month_orders():
-    r = requests.get('http://localhost:8000/api/init_reservation/')
+def my_monthly_function():
+    if date.today().day != 1:
+        return
+    r = requests.get('http://backend:3001/api/add_new_month/')
     print(r.text)
 
 
-# def schedule_task():
-#     # Запуск задачи каждый месяц первого числа в полночь
-#     schedule.every(1).minutes.do(generate_month_orders)
-#
-#     while True:
-#         schedule.run_pending()
-#         time.sleep(1)
-#
-#
-# if __name__ == '__main__':
-#     schedule_task()
+def run_monthly_job():
+    schedule.every().day.at('00:00').do(my_monthly_function)
 
-generate_month_orders()
+
+def main():
+    run_monthly_job()
+    while True:
+        schedule.run_pending()
+        time.sleep(40)
+
+
+if __name__ == "__main__":
+    main()

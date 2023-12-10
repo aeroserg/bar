@@ -22,7 +22,7 @@ export default function Booking() {
 
     const now = new Date();
     const cookies = new Cookies();
-    const csrftoken = cookies.get('csrftoken') || document.querySelector('csrfToken').value || document.querySelector('csrftoken').value
+    const csrftoken = cookies.get('csrftoken') || 'P85fgk6I9W4Wf2LpZjGCGQAXef89IiP6';
 
     // set uo mockdata from api, requseting server for data just 1 time, so no dependences in the useEffect array
     const [mockData, setData] = useState([])
@@ -82,7 +82,6 @@ const [userQuantity, setQuantity] = useState('')
                 alert(err);
               }
         } else if (time && !isMinuteLeft) {
-            console.log(isMinuteLeft)
             alert('Вы уже забронировали место, следующее бронирование откроется уже меньше чем через минуту')
         }
         
@@ -250,9 +249,9 @@ const [userQuantity, setQuantity] = useState('')
                 <div className="btn__wrapper booking">
                         <button type="submit">Забронировать</button>
                     </div>
-                    <div className="b__form_inscription col-md-5 col-12">
-                        Вы также можете забронировать стол, позвонив по номиеру <a href={`tel:${contacts.contacts.phone}`}>{contacts.contacts.phone}</a> 
-                    </div>
+                    {contacts.contacts.phone && <div className="b__form_inscription col-md-5 col-12">
+                        Вы также можете забронировать стол, позвонив по номеру <a href={`tel:${contacts.contacts.phone}`}>{contacts.contacts.phone}</a> 
+                    </div>}
                 </form>
                 
                 </div>

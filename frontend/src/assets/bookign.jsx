@@ -43,7 +43,6 @@ export default function Booking() {
     const [state, dispatch] = useReducer(reducer, {message: '', message_res_id: 1})
     const [stateModalMessageOpen, setOpenClosModal] = useReducer(reducer, { isShown: false})
     function handleMessageShown(success) {
-        console.log(success, 'в функции handleMessageShown')
         switch (success) {
             case true:
                 dispatch({
@@ -98,9 +97,7 @@ const [isLoading, setLoading] = useState(false)
                   }
                 });
                 let data = await res.json();
-                console.log(data.success)
                 if(data.success) {
-                    console.log('success case',data.success)
                     document.querySelector('body').classList.remove('block')
                     setLoading(false);
                     handleMessageShown(true)
@@ -110,7 +107,6 @@ const [isLoading, setLoading] = useState(false)
                     setUserPhone('')
                     setQuantity('')
                 } else if(!data.success) {
-                    console.log('unsuccess case', data.success)
                     document.querySelector('body').classList.remove('block')
                     setLoading(false);
                     handleMessageShown(false)
@@ -220,7 +216,6 @@ const [isLoading, setLoading] = useState(false)
 
     const [selectedDay, setSelectedDay] = useState(0)
     const [selectedTime,setSelectedTime] = useState(0)
-    // console.log('индекс месяца для обхода массива:', currentMonthIndex, '\nНазвание месяца: ', monthName, `\nДанные для месяца`, monthData, '\nИндекс первого дня недели:', firstDayWeekIndex || 7)
     return (
         <section className="l-section" id="booking">
         <h2 className="k__large">Бронирование</h2>

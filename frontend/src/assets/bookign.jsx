@@ -124,7 +124,11 @@ const [isLoading, setLoading] = useState(false)
              
         } else if (time && !isMinuteLeft) {
             setLoading(false);
+            document.querySelector('body').classList.remove('block')
             alert('Вы уже забронировали место, следующее бронирование откроется уже меньше чем через минуту')
+            setUserName('')
+            setUserPhone('')
+            setQuantity('')
         }
         
     }

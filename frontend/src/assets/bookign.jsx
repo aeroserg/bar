@@ -40,20 +40,25 @@ export default function Booking() {
     },[])
 
    
-    const [state, dispatch] = useReducer(reducer, {message: '', message_res_id: 1, isShown: false})
-
+    const [state, dispatch] = useReducer(reducer, {message: '', message_res_id: 1})
+    const [stateModalMessageOpen, setOpenClosModal] = useReducer(reducer, { isShown: false})
     function handleMessageShown(success) {
+        console.log(success, 'в функции handleMessageShown')
         switch (success) {
             case true:
-                // @ts-ignore
                 dispatch({
                     type: 'success'
                 });
+                setOpenClosModal({
+                    type: 'open'
+                });
                 break;
             case false:
-                 // @ts-ignore
                 dispatch({
                     type: 'unsuccess'
+                });
+                setOpenClosModal({
+                    type: 'open'
                 });
                 break;
         }
@@ -69,14 +74,12 @@ const [isLoading, setLoading] = useState(false)
         e.preventDefault();
         document.querySelector('body').classList.add('block')
         setLoading(true);
-        console.log(cookies.get('isMinuteLeft') )
         const isMinuteLeft = cookies.get('isMinuteLeft') !== undefined ? cookies.get('isMinuteLeft') : true;
         const date = document.querySelector('.c_checked') ? document.querySelector('.c_checked').id : false;
         const time = document.querySelector('.m_checked') ? document.querySelector('.m_checked').id : false;
         !time ? alert('Необходимо выбрать время!') : false;
   
         if (time && isMinuteLeft) {
-            console.log(isMinuteLeft)
             let dataToSend = {
                     date: date,
                     time: time,
@@ -84,7 +87,7 @@ const [isLoading, setLoading] = useState(false)
                     phone: userPhone,
                     guest_quantity: userQuantity
                 }
-            try {
+            
                 let res = await fetch(`${HOST}/api/add_reservation/`, {
                   method: "POST",
                   
@@ -95,37 +98,32 @@ const [isLoading, setLoading] = useState(false)
                   }
                 });
                 let data = await res.json();
+                console.log(data.success)
                 if(data.success) {
-                   
+                    console.log('success case',data.success)
                     document.querySelector('body').classList.remove('block')
-                    setLoading(!isLoading);
+                    setLoading(false);
                     handleMessageShown(true)
-                     // @ts-ignore
-                    dispatch({
-                        type: 'open'
-                    });
-                    alert('Мы успешно забронировали за вами столик!\nСкоро наш менеджер свяжется с вами для уточнения деталей.')
+                    // alert('Мы успешно забронировали за вами столик!\nСкоро наш менеджер свяжется с вами для уточнения деталей.')
                     document.cookie = "isMinuteLeft=false; max-age=60";
                     setUserName('')
                     setUserPhone('')
                     setQuantity('')
+                    document.querySelector('.m_checked').classList.value = 'time'
                 } else if(!data.success) {
+                    console.log('unsuccess case', data.success)
                     document.querySelector('body').classList.remove('block')
-                    setLoading(!isLoading);
+                    setLoading(false);
                     handleMessageShown(false)
-                     // @ts-ignore
-                    dispatch({
-                        type: 'open'
-                    });
-                    alert('Что-то пошло не так! Обращаем внимание, что если вы находитесь в режиме инкогнито, заброировать место не получится. Попытайтесь позже или позвоните нам по телефону');
+                  
+                    // alert('Что-то пошло не так! Обращаем внимание, что если вы находитесь в режиме инкогнито, заброировать место не получится. Попытайтесь позже или позвоните нам по телефону');
                     setUserName('')
                     setUserPhone('')
                     setQuantity('')
                 }
-              } catch (err) {
-                alert(err);
-              }
+             
         } else if (time && !isMinuteLeft) {
+            setLoading(false);
             alert('Вы уже забронировали место, следующее бронирование откроется уже меньше чем через минуту')
         }
         
@@ -269,19 +267,19 @@ const [isLoading, setLoading] = useState(false)
                                     <div className="day_name">СБ</div>
                                     <div className="day_name">ВС</div>
                                 </div>
-                                <div className="days">
-                                {monthData.days && monthData.days.length ? monthData.days.map((item, index) => (
-                                        <div id={`${item.date}`} key={index} onClick={item.is_vacant ? () => {setCurrentSelectedDayIndex(index); setSelectedDay(index)}: undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''} ${selectedDay === index ? 'c_checked': ''}`} style={index === 0? {gridColumn: firstDayWeekIndex || 7} : {}}>{item.date !== "" ? new Date(item.date).getDate() : null}</div>
-                                )) : <><Loader /></>}
-                                </div>
+                                {monthData.days !== undefined ? <div className="days">
+                                    {monthData.days.length && (monthData.days.map((item, index) => (
+                                            <div id={`${item.date}`} key={index} onClick={item.is_vacant ? () => {setCurrentSelectedDayIndex(index); setSelectedDay(index)}: undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''} ${selectedDay === index ? 'c_checked': ''}`} style={index === 0? {gridColumn: firstDayWeekIndex || 7} : {}}>{item.date !== "" ? new Date(item.date).getDate() : null}</div>
+                                    )) || '')}
+                                </div>  : <><Loader /></>}
                             </div>
                         </div>
                         <div className="b__timeRanges col-lg-6 offset-lg-1 col-12">
                             <div className="b__form_rowTitle">Время</div>
                             <div className="b__timeRanges_container">
-                                {currentDayData.time_ranges.length ? currentDayData.time_ranges.map((item,index) => (
+                                {currentDayData.time_ranges.length && currentDayData.time_ranges.map((item,index) => (
                                     <div id={`${item.time}`}  onClick={!item.is_available ? () => setSelectedTime(index): undefined} key={index} className={`time ${!item.is_available ? 'm_available' : ''} ${selectedTime == index && !item.is_available ? 'm_checked': ''}`}>{item.time}</div>
-                                )) : <><Loader /></>}
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -313,24 +311,25 @@ const [isLoading, setLoading] = useState(false)
             {/* message */}
             <div className="container-xl">
             
-                <div className={state.isShown ? "modal d-block b__modal" : "modal b__modal"} id="booking_message" >
+                <div className={stateModalMessageOpen.isShown ? "modal d-block b__modal" : "modal b__modal"} id="booking_message" >
                     <div className="body_modal" 
                               style={{ backgroundColor: state.message_res_id ? '#ffffff' : '#FF883E' }}
                     >
                         <div className="b_modal_message" >
-                            {state.message !== '' ? state.message : ''}
+                            {state.message}
                         </div>
                         <div className="modal_close" onClick={() => {
                              // @ts-ignore
-                            dispatch({
+                             setOpenClosModal({
                                 type: 'close'
                             });
+                            location.reload()
                         }}></div>
                     </div>
                 </div>
            
              {/* loader for email send */}
-                <div style={{zIndex:"10000", textAlign: "center", paddingTop: "20%"}} className={isLoading ? 'modal d-block ': 'modal'} id="loader">
+                <div style={{zIndex:"10000", textAlign: "center", paddingTop: "20%", width: '100%', margin: '0 auto', gridColumn: 'auto / span 7'}} className={isLoading ? 'modal d-block ': 'modal'} id="loader">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" id="loaderSVG">
                         <circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff" strokeWidth="10">
                         <animate attributeName="stroke-dasharray" from="0 251.2" to="251.2 0" dur="1.5s" repeatCount="indefinite"></animate>

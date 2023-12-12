@@ -1484,5 +1484,7 @@ button[type="submit"] {
     }
     footer {
         padding: 2rem 0;
+        background-size: 200%;
+        height: 100%;
     }
 }

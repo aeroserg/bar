@@ -127,11 +127,11 @@ a.btn__call_to_action#main_sect_btn{
 
 }
 .b__imgs img {
-    height: 400px;
     z-index: 2;
     position: relative;
     object-fit: cover;
     aspect-ratio: 3 / 2;
+    border: 3px solid #000000;
 }
 .b__imgs {
     padding-left: 3rem;
@@ -432,8 +432,10 @@ a.btn__call_to_action#download_menu {
 }
 .b__bgc_img img {
     width: 100%;
+    height: 410px;
     object-fit: cover;
     max-height: 470px;
+    border: 3px solid #000000;
 }
 .b__workingHours_wrapper {
     position: relative;
@@ -442,7 +444,7 @@ a.btn__call_to_action#download_menu {
     position: absolute;
     top: 0;
     left: 0;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 35px;
     font-weight: 600;
     font-family: 'PlayFair Display', serif;
@@ -621,7 +623,7 @@ footer {
     padding: 2rem;
     background-color: #ffffff;
     max-width: 50%;
-    margin: 10% auto;
+    margin: 37vh auto;
     position: relative;
 }
 .modal_close::before {
@@ -643,9 +645,9 @@ footer {
     top: 40%;
 }
 .modal_close {
-    position: relative;
+    position: absolute;
     top: -65px;
-    right: -115%;
+    right: 0;
     cursor: pointer;
     height: 20px;
     width: 20px;
@@ -1121,7 +1123,7 @@ button[type="submit"] {
         padding: 2rem;
         background-color: #ffffff;
         max-width: 80%;
-        margin: 10% auto;
+        margin: 35vh auto;
 
     }
     .b__item_text {
@@ -1290,7 +1292,6 @@ button[type="submit"] {
         background-color: #ffb282!important;
     }
     a.btn__call_to_action#about_us_btn {
-        font-size: 16px;
         padding: 0.5rem 1rem;
         border: 2px solid #FF883E;
     }
@@ -1340,12 +1341,12 @@ button[type="submit"] {
         padding: 2rem;
         background-color: #ffffff;
         max-width: 90%;
-        margin: 10% auto;
+        margin: 34vh auto;
     }
     .modal_close {
-        position: relative;
+        position: absolute;
         top: -45px;
-        right: -110%;
+        right: 10px;
     }
     .link_to_menu {
         border: none!important;
@@ -1458,6 +1459,9 @@ button[type="submit"] {
     }
     .b__contacts_wrapper {
         margin-top: 2rem;
+    }
+    .b__imgs {
+        padding: 0;
     }
     .b__menu_title {
         font-size: 40px;

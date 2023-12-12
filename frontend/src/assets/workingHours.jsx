@@ -51,7 +51,7 @@ function WorkingHours() {
         <div className="container-xl">
             <div className="b__workingHours_wrapper">
                 <div className="b__bgc_img">
-                    <img src="img/bg_img.png" alt="" />
+                    <img src="img/mayak_interior.png" alt="" />
                 </div>
                 <div className="b__timetable_wrapper">
                     <div className="b__time_item">

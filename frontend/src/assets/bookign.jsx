@@ -99,9 +99,7 @@ const [isLoading, setLoading] = useState(false)
                    
                     document.querySelector('body').classList.remove('block')
                     setLoading(!isLoading);
-                    handleMessageShown({
-                        success: true
-                    })
+                    handleMessageShown(true)
                      // @ts-ignore
                     dispatch({
                         type: 'open'
@@ -114,9 +112,7 @@ const [isLoading, setLoading] = useState(false)
                 } else if(!data.success) {
                     document.querySelector('body').classList.remove('block')
                     setLoading(!isLoading);
-                    handleMessageShown({
-                        success: false
-                    })
+                    handleMessageShown(false)
                      // @ts-ignore
                     dispatch({
                         type: 'open'

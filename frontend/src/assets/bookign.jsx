@@ -109,7 +109,6 @@ const [isLoading, setLoading] = useState(false)
                     setUserName('')
                     setUserPhone('')
                     setQuantity('')
-                    document.querySelector('.m_checked').classList.value = 'time'
                 } else if(!data.success) {
                     console.log('unsuccess case', data.success)
                     document.querySelector('body').classList.remove('block')

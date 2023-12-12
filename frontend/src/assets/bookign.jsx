@@ -324,8 +324,7 @@ const [isLoading, setLoading] = useState(false)
                         <div className="b_modal_message" >
                             {state.message !== '' ? state.message : ''}
                         </div>
-                        <div className="modal_close" onClick={(e) => {
-                            e.target.closest('.b__modal').classList.remove('d-block')
+                        <div className="modal_close" onClick={() => {
                              // @ts-ignore
                             dispatch({
                                 type: 'close'

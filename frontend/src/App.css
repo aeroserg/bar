@@ -611,10 +611,40 @@ footer {
 footer {
     padding: 5rem 0;
 }
+
 .b__modal {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-color: #00000063;
+}
+.body_modal {
+    padding: 2rem;
+    background-color: #ffffff;
+    max-width: 50%;
+    margin: 10% auto;
+    position: relative;
+}
+.modal_close::before {
+    content: '';
+    width: 20px;
+    height: 5px;
+    position: absolute;
+    background-color: #F7E7C4;
+    transform: rotate(45deg) ;
+}
+.modal_close::after {
+    content: '';
+    width: 20px;
+    height: 5px;
+    position: absolute;
+    background-color: #F7E7C4;
+    transform: rotate(-45deg);
+}
+.modal_close {
+    position: relative;
+    top: -65px;
+    right: -115%;
+    cursor: pointer;
 }
 .block {
     overflow: hidden!important;
@@ -632,6 +662,7 @@ button[type="submit"] {
 #booking .btn__wrapper {
     text-align: right;
 }
+
 .b__form_inscription {
     font-family: 'Playfair Display', serif;
     font-size: 24px;
@@ -1082,6 +1113,13 @@ button[type="submit"] {
     }
 }
 @media screen and (max-width: 760px) {
+    .body_modal {
+        padding: 2rem;
+        background-color: #ffffff;
+        max-width: 80%;
+        margin: 10% auto;
+
+    }
     .b__item_text {
         max-width: 55%;
         padding: 0 .5rem;
@@ -1294,6 +1332,17 @@ button[type="submit"] {
 }
 
 @media screen and (max-width: 560px) {
+    .body_modal {
+        padding: 2rem;
+        background-color: #ffffff;
+        max-width: 90%;
+        margin: 10% auto;
+    }
+    .modal_close {
+        position: relative;
+        top: -45px;
+        right: -110%;
+    }
     .link_to_menu {
         border: none!important;
     }

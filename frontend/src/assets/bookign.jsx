@@ -6,11 +6,12 @@
  * @var monthData Object
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import Loader from './modals'
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import useApiData from '../hooks/useApiData';
+import { reducer } from '../reducer';
 
 const HOST = location.protocol + '//' + location.host
 export default function Booking() {
@@ -37,11 +38,37 @@ export default function Booking() {
               }
     })()
     },[])
+
+   
+    const [state, dispatch] = useReducer(reducer, {message: '', message_res_id: 1, isShown: false})
+
+    function handleMessageShown(success) {
+        switch (success) {
+            case true:
+                // @ts-ignore
+                dispatch({
+                    type: 'success'
+                });
+                break;
+            case false:
+                 // @ts-ignore
+                dispatch({
+                    type: 'unsuccess'
+                });
+                break;
+        }
+    }
+
 const [userName, setUserName] = useState('')
 const [userPhone, setUserPhone] = useState('')
 const [userQuantity, setQuantity] = useState('')
+
+const [isLoading, setLoading] = useState(false)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        document.querySelector('body').classList.add('block')
+        setLoading(true);
         console.log(cookies.get('isMinuteLeft') )
         const isMinuteLeft = cookies.get('isMinuteLeft') !== undefined ? cookies.get('isMinuteLeft') : true;
         const date = document.querySelector('.c_checked') ? document.querySelector('.c_checked').id : false;
@@ -69,10 +96,31 @@ const [userQuantity, setQuantity] = useState('')
                 });
                 let data = await res.json();
                 if(data.success) {
+                   
+                    document.querySelector('body').classList.remove('block')
+                    setLoading(!isLoading);
+                    handleMessageShown({
+                        success: true
+                    })
+                     // @ts-ignore
+                    dispatch({
+                        type: 'open'
+                    });
                     alert('Мы успешно забронировали за вами столик!\nСкоро наш менеджер свяжется с вами для уточнения деталей.')
                     document.cookie = "isMinuteLeft=false; max-age=60";
-                    location.reload()
+                    setUserName('')
+                    setUserPhone('')
+                    setQuantity('')
                 } else if(!data.success) {
+                    document.querySelector('body').classList.remove('block')
+                    setLoading(!isLoading);
+                    handleMessageShown({
+                        success: false
+                    })
+                     // @ts-ignore
+                    dispatch({
+                        type: 'open'
+                    });
                     alert('Что-то пошло не так! Обращаем внимание, что если вы находитесь в режиме инкогнито, заброировать место не получится. Попытайтесь позже или позвоните нам по телефону');
                     setUserName('')
                     setUserPhone('')
@@ -264,7 +312,42 @@ const [userQuantity, setQuantity] = useState('')
                         опоздаете более чем на 20 минут, мы не сможем гарантировать вам столик.</p>
                    </div>
             </div>
+        <div className="modals">
 
+            {/* message */}
+            <div className="container-xl">
+            
+                <div className={state.isShown ? "modal d-block b__modal" : "modal b__modal"} id="booking_message" >
+                    <div className="body_modal" 
+                              style={{ backgroundColor: state.message_res_id ? '#ffffff' : '#FF883E' }}
+                    >
+                        <div className="b_modal_message" >
+                            {state.message !== '' ? state.message : ''}
+                        </div>
+                        <div className="modal_close" onClick={(e) => {
+                            e.target.closest('.b__modal').classList.remove('d-block')
+                             // @ts-ignore
+                            dispatch({
+                                type: 'close'
+                            });
+                        }}></div>
+                    </div>
+                </div>
+           
+             {/* loader for email send */}
+                <div style={{zIndex:"10000", textAlign: "center", paddingTop: "20%"}} className={isLoading ? 'modal d-block ': 'modal'} id="loader">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" id="loaderSVG">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff" strokeWidth="10">
+                        <animate attributeName="stroke-dasharray" from="0 251.2" to="251.2 0" dur="1.5s" repeatCount="indefinite"></animate>
+                        <animate attributeName="stroke-dashoffset" from="0" to="-251.2" dur="1.5s" repeatCount="indefinite"></animate>
+                        </circle>
+                    </svg>
+
+                </div>
+            </div>
+        </div>
     </section>
     )
 }
+
+

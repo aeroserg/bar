@@ -12,7 +12,7 @@ import axios from "axios";
 import Cookies from 'universal-cookie';
 import useApiData from '../hooks/useApiData';
 import { reducer } from '../reducer';
-
+let firstAvailableDay;
 const HOST = location.protocol + '//' + location.host
 export default function Booking() {
     const apiUrl = `${HOST}/api/contacts/`;
@@ -185,6 +185,7 @@ const [isLoading, setLoading] = useState(false)
         setMonthName(monthData.days ? new Date(monthData.days[0].date).toLocaleString('defautl', { month: 'long' }) : now.toLocaleString('default', { month: 'long' }));
         setFirstDayWeekIndex(monthData.days ? new Date(monthData.days[0].date).getDay() : 1);
     }, [monthData])
+   
     // //when user clicks on arrows - were setting month data and dayIndex to starting position 0
     useEffect(() => {
         setMonthData(mockData.length ? {...mockData[currentMonthIndex]}: []);  
@@ -213,6 +214,21 @@ const [isLoading, setLoading] = useState(false)
     useEffect(() => {
         setCurrentDayData(monthData.days[currentSelectedDayIndex])
     }, [currentSelectedDayIndex])
+
+    useEffect(() => {
+        if (monthData.days){
+        for (let i = 0; i < monthData.days.length; i++){
+                    if(monthData.days[i].is_vacant){
+                   
+                    firstAvailableDay = i;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+        }
+        firstAvailableDay !== undefined ? setCurrentSelectedDayIndex(firstAvailableDay) : false;
+    }, [monthData])
 
     const [selectedDay, setSelectedDay] = useState(0)
     const [selectedTime,setSelectedTime] = useState(0)
@@ -267,7 +283,7 @@ const [isLoading, setLoading] = useState(false)
                                 </div>
                                 {monthData.days !== undefined ? <div className="days">
                                     {monthData.days.length && (monthData.days.map((item, index) => (
-                                            <div id={`${item.date}`} key={index} onClick={item.is_vacant ? () => {setCurrentSelectedDayIndex(index); setSelectedDay(index)}: undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''} ${selectedDay === index ? 'c_checked': ''}`} style={index === 0? {gridColumn: firstDayWeekIndex || 7} : {}}>{item.date !== "" ? new Date(item.date).getDate() : null}</div>
+                                            <div id={`${item.date}`} key={index} onClick={item.is_vacant ? () => {setCurrentSelectedDayIndex(index); setSelectedDay(index)}: undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''} ${ currentSelectedDayIndex === index ? 'c_checked': ''}`} style={index === 0? {gridColumn: firstDayWeekIndex || 7} : {}}>{item.date !== "" ? new Date(item.date).getDate() : index+1}</div>
                                     )) || '')}
                                 </div>  : <><Loader /></>}
                             </div>
@@ -296,7 +312,7 @@ const [isLoading, setLoading] = useState(false)
                 
                 </div>
                 <div className="b__booking_footerDescription">
-                    <p>Наш администратор перезвонит вам, и вы сможете передать ему все свои пожелания.</p>
+                    <p><strong>Наш администратор перезвонит вам, и вы сможете передать ему все свои пожелания.</strong></p>
 
                         <p>Пожалуйста, сохраните сообщение с подтверждением бронирования ресторана на вашем телефоне.</p>
                         

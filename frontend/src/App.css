@@ -478,7 +478,8 @@ a.btn__call_to_action#download_menu {
 }
 .b__booking_wrapper {
     padding: 3rem;
-    background-color: #D9D9D9;
+    background-color: #f7e7c4;
+    border: 3px solid #000000;
 }
 input {
     background-color: #FF883E;
@@ -1332,10 +1333,17 @@ button[type="submit"] {
 @media screen and (max-width: 1400px) {
     .b__timetable_wrapper {
         font-size: 30px;
-    }
-   
+    }  
 }
-
+@media screen and (min-width: 1400px){
+    .b__bgc_img img {
+        width: 100%;
+        height: unset;
+        object-fit: cover;
+        max-height: 470px;
+        border: 3px solid #000000;
+    }
+}
 @media screen and (max-width: 560px) {
     .body_modal {
         padding: 2rem;
@@ -1428,7 +1436,11 @@ button[type="submit"] {
     }
     .b__booking_wrapper {
         padding: 1rem;
-        background-color: #d9d9d9;
+        background-color: #f7e7c4;
+        border-left: 3px solid #000000;
+        border-right: 3px solid #000000;
+        border-top: 3px solid #000000;
+        border-bottom: none;
     }
     button[type=submit] {
         font-size: 22px;
@@ -1444,7 +1456,10 @@ button[type="submit"] {
         font-size: 18px;
         padding: 1rem;
         margin-top: 0;
-        background-color: #d9d9d9
+        background-color: #f7e7c4;
+        border-right: 3px solid #000000;
+        border-left: 3px solid #000000;
+        border-bottom: 3px solid #000000;
     }
     .b__contatcs_title {
         font-size: 26px;
@@ -1486,5 +1501,10 @@ button[type="submit"] {
         padding: 2rem 0;
         background-size: 200%;
         height: 100%;
+    }
+}
+@media screen and (min-width: 997px) and (max-width: 1100px){
+    .b__timetable_wrapper {
+        font-size: 25px!important;
     }
 }

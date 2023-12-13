@@ -48,8 +48,8 @@ export default function MainMenu() {
                 </div>
             </div>
             <div className="btn__wrapper d-flex justify-content-between flex-row">
-                <a className="btn__call_to_action" target='_blank' rel="noreferrer" id="download_menu" href={menuLinkData.menu_pdf_path}>Скачать меню</a>
-                <a className="btn__call_to_action" id="about_us_btn" href="#booking">Забронировать</a>
+                <a className="btn__call_to_action" target='_blank' rel="noreferrer" style={{padding: '0.5rem 5rem'}} id="download_menu" href={menuLinkData.menu_pdf_path}>Скачать меню</a>
+                <a className="btn__call_to_action" id="about_us_btn" style={{padding: '0.5rem 5rem'}} href="#booking">Забронировать</a>
 
             </div>
         </div>

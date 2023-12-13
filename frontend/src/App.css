@@ -1115,6 +1115,13 @@ button[type="submit"] {
     }
     .btn__call_to_action#about_us_btn {
         font-size: 26px;
+        padding: 0.5rem 1rem!important;
+
+    }
+    .btn__call_to_action#download_menu {
+        font-size: 26px;
+        padding: 0.5rem 1rem!important;
+
     }
     .b__timeRanges_container {
         grid-gap: 1rem;
@@ -1168,6 +1175,8 @@ button[type="submit"] {
     }
     a.btn__call_to_action#about_us_btn {
         font-size: 18px;
+        padding: 0.5rem 2rem!important;
+
     }
     .link_to_menu {
         padding: 1px 9%;
@@ -1177,6 +1186,8 @@ button[type="submit"] {
     }
     a.btn__call_to_action#download_menu {
         font-size: 18px;
+        padding: 0.5rem 2rem!important;
+
     }
     .b__imgs img {
         width: 100%;
@@ -1294,7 +1305,7 @@ button[type="submit"] {
         background-color: #ffb282!important;
     }
     a.btn__call_to_action#about_us_btn {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem!important;
         border: 2px solid #FF883E;
     }
     #download_menu {
@@ -1384,12 +1395,12 @@ button[type="submit"] {
     }
     a.btn__call_to_action#about_us_btn {
         font-size: 16px;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem!important;
 
     }
     a.btn__call_to_action#download_menu {
         font-size: 16px;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem!important;
 
     }
     .b__card_img img {

@@ -5,11 +5,17 @@ export default function MainMenu() {
 
     const apiUrl = `${HOST}/api/menu/`;
     const initialData = {
-        "menu": []
+        menu: [
+            {
+                category_name: '',
+                dishes: []
+            }
+    
+        ]
     };
     const menuLinkData = useApiData(`${HOST}/api/download_menu/`, {menu_pdf_path: ''})
      const munuData = useApiData(apiUrl, initialData);
-     const slicedMenuData = munuData.menu ? munuData.menu.slice(0, 4) : [];
+ 
     return (
         <section className="l-section" id='menu'>
         <h2 className="k__small">Меню</h2>
@@ -19,7 +25,7 @@ export default function MainMenu() {
             </div>
             <div className="b__menu_wrapper">
                 <div className="b__menu_innerGrid">
-                {slicedMenuData.lenght !== 0 ? slicedMenuData.map((item, index) => (
+                {munuData.menu[0].dishes.length ? munuData.menu[0].dishes.map((item, index) => (
                     <div className="b__menu_card"
                     style={index === 3 ? { gridColumn: "auto / span 3" } : {}} 
                      key={index}>
@@ -36,7 +42,7 @@ export default function MainMenu() {
                                 </div>
                             </div>
                 )) : <></>}
-                        <a href="/menu/" className="b__menu_card link_to_menu" style={slicedMenuData.length === 0 ? {gridColumn: "auto / span 6", height: '440px'} : slicedMenuData.length % 4 === 0 ? {gridColumn: "auto / span 3", height: '440px'} : {gridColumn: `auto / span ${(6 - (slicedMenuData.length)*2)}`, height: '440px'} } >
+                        <a href="/menu/" className="b__menu_card link_to_menu" style={munuData.menu[0].dishes.length === 0 ? {gridColumn: "auto / span 6", height: '440px'} : munuData.menu[0].dishes.length % 4 === 0 ? {gridColumn: "auto / span 3", height: '440px'} : {gridColumn: `auto / span ${(6 - (munuData.menu[0].dishes.length)*2)}`, height: '440px'} } >
                             <img src="img/btn_full_menu.svg" alt="" />
                             <div className="b__arrow_wrapper">
                                 <svg id="menuArrow" width="116" height="73" viewBox="0 0 116 73" fill="none" xmlns="http://www.w3.org/2000/svg"  xmlnsXlink="http://www.w3.org/1999/xlink">

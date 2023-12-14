@@ -60,7 +60,7 @@ class MenuView(APIView):
                 'category_name': 'first',
                 'dishes': [
                     {
-                        "photo": '', #menu_content[i].photo.file.name.replace('/app', ''),
+                        "photo": menu_content[i].photo.file.name.replace('/app', ''),
                         "price": menu_content[i].price,
                         "name": menu_content[i].name,
                         "description": menu_content[i].description,
@@ -83,7 +83,7 @@ class MenuView(APIView):
 
             c['dishes'].append(
                 {
-                    "photo":'',# content.photo.file.name.replace('/app', ''),
+                    "photo": content.photo.file.name.replace('/app', ''),
                     "price": content.price,
                     "name": content.name,
                     "description": content.description,

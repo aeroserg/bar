@@ -52,10 +52,26 @@ class GetInteriorView(APIView):
 
 class MenuView(APIView):
     def get(self, request):
-        response = {"menu": []}
-
         menu_content = Menu.objects.all().order_by('category')
         init_category = menu_content[0].category.category
+
+        response = {"menu": [
+            {
+                'category_name': 'first',
+                'dishes': [
+                    {
+                        "photo": menu_content[i].photo.file.name.replace('/app', ''),
+                        "price": menu_content[i].price,
+                        "name": menu_content[i].name,
+                        "description": menu_content[i].description,
+                        "is_promo": menu_content[i].is_promo
+                    }
+                    for i in range(4) if i < len(menu_content)
+                ]
+            }
+        ]}
+        print(response)
+
         c = {'category_name': init_category, 'dishes': []}
 
         for content in menu_content:

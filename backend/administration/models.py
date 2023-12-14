@@ -5,9 +5,23 @@ class About(models.Model):
     photo = models.FileField(upload_to='about/')
     description = models.TextField()
 
+    def __str__(self):
+        name_object = f'О нас'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'О нас'
+
 
 class Interior(models.Model):
     description = models.TextField()
+
+    def __str__(self):
+        name_object = f'Интерьер'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Интерьер'
 
 
 class InteriorImage(models.Model):
@@ -16,12 +30,28 @@ class InteriorImage(models.Model):
     description = models.TextField()
 
 
+class CategorySection(models.Model):
+    category = models.CharField(max_length=255)
+
+    def __str__(self):
+        name_object = self.category
+        return name_object
+
+
 class Menu(models.Model):
     photo = models.FileField()
     price = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     description = models.TextField()
     is_promo = models.BooleanField()
+    category = models.ForeignKey(CategorySection, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        name_object = self.name
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Меню'
 
 
 class Contact(models.Model):
@@ -29,11 +59,22 @@ class Contact(models.Model):
     address = models.TextField()
     work_time = models.CharField(max_length=255)
 
+    def __str__(self):
+        name_object = f'Контакты'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Контакты'
+
 
 class WorkDay(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     is_vacation = models.BooleanField()
+
+    def __str__(self):
+        name_object = f'{self.start_time} - {self.end_time}'
+        return name_object
 
 
 class WorkTime(models.Model):
@@ -44,6 +85,13 @@ class WorkTime(models.Model):
     friday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="friday")
     saturday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="saturday")
     sunday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="sunday")
+
+    def __str__(self):
+        name_object = f'Рабочие часы'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Рабочие часы'
 
 
 class Reservation(models.Model):
@@ -68,6 +116,9 @@ class Reservation(models.Model):
         name_object = self.month
         return name_object
 
+    class Meta:
+        verbose_name_plural = 'Бронирование'
+
 
 class DayContent(models.Model):
     for hour in range(12, 24):
@@ -77,10 +128,6 @@ class DayContent(models.Model):
             locals()[f'{time_str}_guests_quantity'] = models.IntegerField(blank=True, null=True)
             locals()[f'{time_str}_name'] = models.CharField(max_length=400, blank=True, null=True)
             locals()[f'{time_str}_phone_number'] = models.CharField(max_length=20, blank=True, null=True)
-
-    def __str__(self):
-        name_object = 'Расписание на день'
-        return name_object
 
 
 class Days(models.Model):
@@ -97,11 +144,11 @@ class SendEmailSettings(models.Model):
     email_address_to = models.CharField(max_length=255)
 
     def __str__(self):
-        name_object = 'Email settings'
+        name_object = 'Настройки эл. почты'
         return name_object
 
     class Meta:
-        verbose_name_plural = 'Email settings'
+        verbose_name_plural = 'Настройки эл. почты'
 
 
 class EmailMessage(models.Model):
@@ -110,3 +157,10 @@ class EmailMessage(models.Model):
 
 class MenuPDF(models.Model):
     menu = models.FileField(upload_to='menu_pdf/')
+
+    def __str__(self):
+        name_object = 'Меню в pdf'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Меню в pdf'

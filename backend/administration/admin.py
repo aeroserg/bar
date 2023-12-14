@@ -1,6 +1,7 @@
 from django.contrib import admin
-
+from django.utils.safestring import mark_safe
 from .models import *
+import socket
 
 
 @admin.register(About)
@@ -30,9 +31,21 @@ class InteriorImage(admin.ModelAdmin):
         return {}
 
 
+@admin.register(CategorySection)
+class CategorySection(admin.ModelAdmin):
+    def get_model_perms(self, request):
+        return {}
+
+
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ["preview"]
+
+    def preview(self, obj):
+        try:
+            return mark_safe(f'<img src="http://barmayak.ru/{obj.photo.path.replace("/app", "")}">')
+        except:
+            return "Hello!"
 
 
 @admin.register(MenuPDF)
@@ -49,7 +62,8 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(WorkDay)
 class WorkDayAdmin(admin.ModelAdmin):
-    pass
+    def get_model_perms(self, request):
+        return {}
 
 
 @admin.register(WorkTime)

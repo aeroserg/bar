@@ -52,12 +52,20 @@ class GetInteriorView(APIView):
 
 class MenuView(APIView):
     def get(self, request):
-        menu_content = Menu.objects.all()
+        response = {"menu": []}
 
-        menu = []
+        menu_content = Menu.objects.all().order_by('category')
+        init_category = menu_content[0].category.category
+        c = {'category_name': init_category, 'dishes': []}
 
         for content in menu_content:
-            menu.append(
+            if content.category.category != init_category:
+                response['menu'].append(c)
+                init_category = content.category.category
+                c['category_name'] = init_category
+                c['dishes'] = []
+
+            c['dishes'].append(
                 {
                     "photo": content.photo.file.name.replace('/app', ''),
                     "price": content.price,
@@ -66,8 +74,9 @@ class MenuView(APIView):
                     "is_promo": content.is_promo
                 }
             )
+        response['menu'].append(c)
 
-        return Response({"menu": menu})
+        return Response(response)
 
 
 class ContactView(APIView):

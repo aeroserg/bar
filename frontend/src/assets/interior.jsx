@@ -65,7 +65,7 @@ function Interior() {
         }
     }
     return ( <>
-        {interiorData.interior.interior_imgs.length && <section className="l-section"  id="interior">
+        {(interiorData.interior.interior_imgs.length && <section className="l-section"  id="interior">
             <h2 className="k__medium">Интерьер</h2>
             <div className="container-xl">
                 <div className="b__interier_wrapper">
@@ -113,7 +113,7 @@ function Interior() {
 
                 </div>
             </div>
-        </section>}
+        </section>) || <></>}
         </>
     ) 
 

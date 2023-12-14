@@ -6,12 +6,13 @@
  * @var monthData Object
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import Loader from './modals'
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import useApiData from '../hooks/useApiData';
-
+import { reducer } from '../reducer';
+let firstAvailableDay;
 const HOST = location.protocol + '//' + location.host
 export default function Booking() {
     const apiUrl = `${HOST}/api/contacts/`;
@@ -37,19 +38,47 @@ export default function Booking() {
               }
     })()
     },[])
+
+   
+    const [state, dispatch] = useReducer(reducer, {message: '', message_res_id: 1})
+    const [stateModalMessageOpen, setOpenClosModal] = useReducer(reducer, { isShown: false})
+    function handleMessageShown(success) {
+        switch (success) {
+            case true:
+                dispatch({
+                    type: 'success'
+                });
+                setOpenClosModal({
+                    type: 'open'
+                });
+                break;
+            case false:
+                dispatch({
+                    type: 'unsuccess'
+                });
+                setOpenClosModal({
+                    type: 'open'
+                });
+                break;
+        }
+    }
+
 const [userName, setUserName] = useState('')
 const [userPhone, setUserPhone] = useState('')
 const [userQuantity, setQuantity] = useState('')
+
+const [isLoading, setLoading] = useState(false)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(cookies.get('isMinuteLeft') )
+        document.querySelector('body').classList.add('block')
+        setLoading(true);
         const isMinuteLeft = cookies.get('isMinuteLeft') !== undefined ? cookies.get('isMinuteLeft') : true;
         const date = document.querySelector('.c_checked') ? document.querySelector('.c_checked').id : false;
         const time = document.querySelector('.m_checked') ? document.querySelector('.m_checked').id : false;
         !time ? alert('Необходимо выбрать время!') : false;
   
         if (time && isMinuteLeft) {
-            console.log(isMinuteLeft)
             let dataToSend = {
                     date: date,
                     time: time,
@@ -57,7 +86,7 @@ const [userQuantity, setQuantity] = useState('')
                     phone: userPhone,
                     guest_quantity: userQuantity
                 }
-            try {
+            
                 let res = await fetch(`${HOST}/api/add_reservation/`, {
                   method: "POST",
                   
@@ -69,20 +98,32 @@ const [userQuantity, setQuantity] = useState('')
                 });
                 let data = await res.json();
                 if(data.success) {
-                    alert('Мы успешно забронировали за вами столик!\nСкоро наш менеджер свяжется с вами для уточнения деталей.')
+                    document.querySelector('body').classList.remove('block')
+                    setLoading(false);
+                    handleMessageShown(true)
+                    // alert('Мы успешно забронировали за вами столик!\nСкоро наш менеджер свяжется с вами для уточнения деталей.')
                     document.cookie = "isMinuteLeft=false; max-age=60";
-                    location.reload()
+                    setUserName('')
+                    setUserPhone('')
+                    setQuantity('')
                 } else if(!data.success) {
-                    alert('Что-то пошло не так! Обращаем внимание, что если вы находитесь в режиме инкогнито, заброировать место не получится. Попытайтесь позже или позвоните нам по телефону');
+                    document.querySelector('body').classList.remove('block')
+                    setLoading(false);
+                    handleMessageShown(false)
+                  
+                    // alert('Что-то пошло не так! Обращаем внимание, что если вы находитесь в режиме инкогнито, заброировать место не получится. Попытайтесь позже или позвоните нам по телефону');
                     setUserName('')
                     setUserPhone('')
                     setQuantity('')
                 }
-              } catch (err) {
-                alert(err);
-              }
+             
         } else if (time && !isMinuteLeft) {
+            setLoading(false);
+            document.querySelector('body').classList.remove('block')
             alert('Вы уже забронировали место, следующее бронирование откроется уже меньше чем через минуту')
+            setUserName('')
+            setUserPhone('')
+            setQuantity('')
         }
         
     }
@@ -144,6 +185,7 @@ const [userQuantity, setQuantity] = useState('')
         setMonthName(monthData.days ? new Date(monthData.days[0].date).toLocaleString('defautl', { month: 'long' }) : now.toLocaleString('default', { month: 'long' }));
         setFirstDayWeekIndex(monthData.days ? new Date(monthData.days[0].date).getDay() : 1);
     }, [monthData])
+   
     // //when user clicks on arrows - were setting month data and dayIndex to starting position 0
     useEffect(() => {
         setMonthData(mockData.length ? {...mockData[currentMonthIndex]}: []);  
@@ -173,9 +215,23 @@ const [userQuantity, setQuantity] = useState('')
         setCurrentDayData(monthData.days[currentSelectedDayIndex])
     }, [currentSelectedDayIndex])
 
+    useEffect(() => {
+        if (monthData.days){
+        for (let i = 0; i < monthData.days.length; i++){
+                    if(monthData.days[i].is_vacant){
+                   
+                    firstAvailableDay = i;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+        }
+        firstAvailableDay !== undefined ? setCurrentSelectedDayIndex(firstAvailableDay) : false;
+    }, [monthData])
+
     const [selectedDay, setSelectedDay] = useState(0)
     const [selectedTime,setSelectedTime] = useState(0)
-    // console.log('индекс месяца для обхода массива:', currentMonthIndex, '\nНазвание месяца: ', monthName, `\nДанные для месяца`, monthData, '\nИндекс первого дня недели:', firstDayWeekIndex || 7)
     return (
         <section className="l-section" id="booking">
         <h2 className="k__large">Бронирование</h2>
@@ -225,19 +281,19 @@ const [userQuantity, setQuantity] = useState('')
                                     <div className="day_name">СБ</div>
                                     <div className="day_name">ВС</div>
                                 </div>
-                                <div className="days">
-                                {monthData.days && monthData.days.length ? monthData.days.map((item, index) => (
-                                        <div id={`${item.date}`} key={index} onClick={item.is_vacant ? () => {setCurrentSelectedDayIndex(index); setSelectedDay(index)}: undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''} ${selectedDay === index ? 'c_checked': ''}`} style={index === 0? {gridColumn: firstDayWeekIndex || 7} : {}}>{item.date !== "" ? new Date(item.date).getDate() : null}</div>
-                                )) : <><Loader /></>}
-                                </div>
+                                {monthData.days !== undefined ? <div className="days">
+                                    {monthData.days.length && (monthData.days.map((item, index) => (
+                                            <div id={`${item.date}`} key={index} onClick={item.is_vacant ? () => {setCurrentSelectedDayIndex(index); setSelectedDay(index)}: undefined} className={`day_num ${item.is_vacant ? 'c_available' : ''} ${ currentSelectedDayIndex === index ? 'c_checked': ''}`} style={index === 0? {gridColumn: firstDayWeekIndex || 7} : {}}>{item.date !== "" ? new Date(item.date).getDate() : index+1}</div>
+                                    )) || '')}
+                                </div>  : <><Loader /></>}
                             </div>
                         </div>
                         <div className="b__timeRanges col-lg-6 offset-lg-1 col-12">
                             <div className="b__form_rowTitle">Время</div>
                             <div className="b__timeRanges_container">
-                                {currentDayData.time_ranges.length ? currentDayData.time_ranges.map((item,index) => (
+                                {currentDayData.time_ranges.length && currentDayData.time_ranges.map((item,index) => (
                                     <div id={`${item.time}`}  onClick={!item.is_available ? () => setSelectedTime(index): undefined} key={index} className={`time ${!item.is_available ? 'm_available' : ''} ${selectedTime == index && !item.is_available ? 'm_checked': ''}`}>{item.time}</div>
-                                )) : <><Loader /></>}
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -256,7 +312,7 @@ const [userQuantity, setQuantity] = useState('')
                 
                 </div>
                 <div className="b__booking_footerDescription">
-                    <p>Наш администратор перезвонит вам, и вы сможете передать ему все свои пожелания.</p>
+                    <p><strong>Наш администратор перезвонит вам, и вы сможете передать ему все свои пожелания.</strong></p>
 
                         <p>Пожалуйста, сохраните сообщение с подтверждением бронирования ресторана на вашем телефоне.</p>
                         
@@ -264,7 +320,42 @@ const [userQuantity, setQuantity] = useState('')
                         опоздаете более чем на 20 минут, мы не сможем гарантировать вам столик.</p>
                    </div>
             </div>
+        <div className="modals">
 
+            {/* message */}
+            <div className="container-xl">
+            
+                <div className={stateModalMessageOpen.isShown ? "modal d-block b__modal" : "modal b__modal"} id="booking_message" >
+                    <div className="body_modal" 
+                              style={{ backgroundColor: state.message_res_id ? '#ffffff' : '#FF883E' }}
+                    >
+                        <div className="b_modal_message" >
+                            {state.message}
+                        </div>
+                        <div className="modal_close" onClick={() => {
+                             // @ts-ignore
+                             setOpenClosModal({
+                                type: 'close'
+                            });
+                            location.reload()
+                        }}></div>
+                    </div>
+                </div>
+           
+             {/* loader for email send */}
+                <div style={{zIndex:"10000", textAlign: "center", paddingTop: "20%", width: '100%', margin: '0 auto', gridColumn: 'auto / span 7'}} className={isLoading ? 'modal d-block ': 'modal'} id="loader">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" id="loaderSVG">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff" strokeWidth="10">
+                        <animate attributeName="stroke-dasharray" from="0 251.2" to="251.2 0" dur="1.5s" repeatCount="indefinite"></animate>
+                        <animate attributeName="stroke-dashoffset" from="0" to="-251.2" dur="1.5s" repeatCount="indefinite"></animate>
+                        </circle>
+                    </svg>
+
+                </div>
+            </div>
+        </div>
     </section>
     )
 }
+
+

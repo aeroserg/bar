@@ -127,11 +127,12 @@ a.btn__call_to_action#main_sect_btn{
 
 }
 .b__imgs img {
-    height: 400px;
     z-index: 2;
+    width: 100%;
     position: relative;
     object-fit: cover;
     aspect-ratio: 3 / 2;
+    border: 3px solid #000000;
 }
 .b__imgs {
     padding-left: 3rem;
@@ -432,8 +433,10 @@ a.btn__call_to_action#download_menu {
 }
 .b__bgc_img img {
     width: 100%;
+    height: 410px;
     object-fit: cover;
     max-height: 470px;
+    border: 3px solid #000000;
 }
 .b__workingHours_wrapper {
     position: relative;
@@ -442,7 +445,7 @@ a.btn__call_to_action#download_menu {
     position: absolute;
     top: 0;
     left: 0;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 35px;
     font-weight: 600;
     font-family: 'PlayFair Display', serif;
@@ -476,7 +479,8 @@ a.btn__call_to_action#download_menu {
 }
 .b__booking_wrapper {
     padding: 3rem;
-    background-color: #D9D9D9;
+    background-color: #f7e7c4;
+    border: 3px solid #000000;
 }
 input {
     background-color: #FF883E;
@@ -611,10 +615,44 @@ footer {
 footer {
     padding: 5rem 0;
 }
+
 .b__modal {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-color: #00000063;
+}
+.body_modal {
+    padding: 2rem;
+    background-color: #ffffff;
+    max-width: 50%;
+    margin: 37vh auto;
+    position: relative;
+}
+.modal_close::before {
+    content: '';
+    width: 20px;
+    height: 5px;
+    position: absolute;
+    background-color: #F7E7C4;
+    transform: rotate(45deg) ;
+    top: 40%;
+}
+.modal_close::after {
+    content: '';
+    width: 20px;
+    height: 5px;
+    position: absolute;
+    background-color: #F7E7C4;
+    transform: rotate(-45deg);
+    top: 40%;
+}
+.modal_close {
+    position: absolute;
+    top: -65px;
+    right: 0;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
 }
 .block {
     overflow: hidden!important;
@@ -632,6 +670,7 @@ button[type="submit"] {
 #booking .btn__wrapper {
     text-align: right;
 }
+
 .b__form_inscription {
     font-family: 'Playfair Display', serif;
     font-size: 24px;
@@ -1076,12 +1115,26 @@ button[type="submit"] {
     }
     .btn__call_to_action#about_us_btn {
         font-size: 26px;
+        padding: 0.5rem 1rem!important;
+
+    }
+    .btn__call_to_action#download_menu {
+        font-size: 26px;
+        padding: 0.5rem 1rem!important;
+
     }
     .b__timeRanges_container {
         grid-gap: 1rem;
     }
 }
 @media screen and (max-width: 760px) {
+    .body_modal {
+        padding: 2rem;
+        background-color: #ffffff;
+        max-width: 80%;
+        margin: 35vh auto;
+
+    }
     .b__item_text {
         max-width: 55%;
         padding: 0 .5rem;
@@ -1122,6 +1175,8 @@ button[type="submit"] {
     }
     a.btn__call_to_action#about_us_btn {
         font-size: 18px;
+        padding: 0.5rem 2rem!important;
+
     }
     .link_to_menu {
         padding: 1px 9%;
@@ -1131,6 +1186,8 @@ button[type="submit"] {
     }
     a.btn__call_to_action#download_menu {
         font-size: 18px;
+        padding: 0.5rem 2rem!important;
+
     }
     .b__imgs img {
         width: 100%;
@@ -1248,8 +1305,7 @@ button[type="submit"] {
         background-color: #ffb282!important;
     }
     a.btn__call_to_action#about_us_btn {
-        font-size: 16px;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem!important;
         border: 2px solid #FF883E;
     }
     #download_menu {
@@ -1289,11 +1345,29 @@ button[type="submit"] {
 @media screen and (max-width: 1400px) {
     .b__timetable_wrapper {
         font-size: 30px;
-    }
-   
+    }  
 }
-
+@media screen and (min-width: 1400px){
+    .b__bgc_img img {
+        width: 100%;
+        height: unset;
+        object-fit: cover;
+        max-height: 470px;
+        border: 3px solid #000000;
+    }
+}
 @media screen and (max-width: 560px) {
+    .body_modal {
+        padding: 2rem;
+        background-color: #ffffff;
+        max-width: 90%;
+        margin: 34vh auto;
+    }
+    .modal_close {
+        position: absolute;
+        top: -45px;
+        right: 10px;
+    }
     .link_to_menu {
         border: none!important;
     }
@@ -1321,12 +1395,12 @@ button[type="submit"] {
     }
     a.btn__call_to_action#about_us_btn {
         font-size: 16px;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem!important;
 
     }
     a.btn__call_to_action#download_menu {
         font-size: 16px;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem!important;
 
     }
     .b__card_img img {
@@ -1374,7 +1448,11 @@ button[type="submit"] {
     }
     .b__booking_wrapper {
         padding: 1rem;
-        background-color: #d9d9d9;
+        background-color: #f7e7c4;
+        border-left: 3px solid #000000;
+        border-right: 3px solid #000000;
+        border-top: 3px solid #000000;
+        border-bottom: none;
     }
     button[type=submit] {
         font-size: 22px;
@@ -1390,7 +1468,10 @@ button[type="submit"] {
         font-size: 18px;
         padding: 1rem;
         margin-top: 0;
-        background-color: #d9d9d9
+        background-color: #f7e7c4;
+        border-right: 3px solid #000000;
+        border-left: 3px solid #000000;
+        border-bottom: 3px solid #000000;
     }
     .b__contatcs_title {
         font-size: 26px;
@@ -1405,6 +1486,9 @@ button[type="submit"] {
     }
     .b__contacts_wrapper {
         margin-top: 2rem;
+    }
+    .b__imgs {
+        padding: 0;
     }
     .b__menu_title {
         font-size: 40px;
@@ -1427,5 +1511,12 @@ button[type="submit"] {
     }
     footer {
         padding: 2rem 0;
+        background-size: 200%;
+        height: 100%;
+    }
+}
+@media screen and (min-width: 997px) and (max-width: 1100px){
+    .b__timetable_wrapper {
+        font-size: 25px!important;
     }
 }

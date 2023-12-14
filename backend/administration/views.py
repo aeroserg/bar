@@ -60,7 +60,7 @@ class MenuView(APIView):
 
         for content in menu_content:
             if content.category.category != init_category:
-                response['menu'].append(c)
+                response['menu'].append(c.copy())
                 init_category = content.category.category
                 c['category_name'] = init_category
                 c['dishes'] = []
@@ -74,7 +74,7 @@ class MenuView(APIView):
                     "is_promo": content.is_promo
                 }
             )
-        response['menu'].append(c)
+        response['menu'].append(c.copy())
 
         return Response(response)
 

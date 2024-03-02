@@ -16,7 +16,7 @@ class MainPage(models.Model):
 class About(models.Model):
     photo = models.FileField(upload_to='about/', verbose_name='Фото')
     description = models.TextField(verbose_name='Описание')
-    inscription = models.TextField(default=None, verbose_name='Подпись')
+    inscription = models.TextField(default=None, verbose_name='Подпись', null=True)
 
     def __str__(self):
         name_object = f'О нас'

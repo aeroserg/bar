@@ -366,8 +366,10 @@ class AddNewMonth(APIView):
         current_date = datetime.datetime.today()
         second_month_date = current_date.month % 12 + 2
         second_year_date = current_date.year
+
         if second_month_date < current_date.month:
             second_year_date += 1
+
         second_month = datetime.date(second_year_date, second_month_date, 1)
         month_name = second_month.strftime('%B')
 

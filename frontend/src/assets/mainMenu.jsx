@@ -5,6 +5,7 @@ export default function MainMenu() {
 
     const apiUrl = `${HOST}/api/menu/`;
     const initialData = {
+        subtitle: '',
         menu: [
             {
                 category_name: '',
@@ -21,7 +22,7 @@ export default function MainMenu() {
         <h2 className="k__small">Меню</h2>
         <div className="container-xl">
             <div className="b__menu_title">
-                Попробуй Ирландию на вкус
+                {munuData.subtitle}
             </div>
             <div className="b__menu_wrapper">
                 <div className="b__menu_innerGrid">

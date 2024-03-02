@@ -27,16 +27,23 @@ export default function Booking() {
 
     // set uo mockdata from api, requseting server for data just 1 time, so no dependences in the useEffect array
     const [mockData, setData] = useState([])
+    const [addData, setAddData] = useState({
+        title: '',
+        description: '',
+        inscription: '',
+        dates: {}
+    })
     const [firstDayWeekIndex, setFirstDayWeekIndex] = useState(1)
     useEffect(() => {
         ( async () => {
             try {
                 const { data } = await axios(`${HOST}/api/get_reservation/`);
-                setData(data.dates)                
+                setData(data.dates)  
+                setAddData(data)           
               } catch (err) {
                 console.error(err);
               }
-    })()
+        })()
     },[])
 
    
@@ -230,7 +237,7 @@ const [isLoading, setLoading] = useState(false)
         firstAvailableDay !== undefined ? setCurrentSelectedDayIndex(firstAvailableDay) : false;
     }, [monthData])
 
-    const [selectedDay, setSelectedDay] = useState(0)
+    const [selectedDay, setSelectedDay] = useState(0) //eslint-disable-line
     const [selectedTime,setSelectedTime] = useState(0)
     return (
         <section className="l-section" id="booking">
@@ -305,19 +312,16 @@ const [isLoading, setLoading] = useState(false)
                 <div className="btn__wrapper booking">
                         <button type="submit">Забронировать</button>
                     </div>
-                    {contacts.contacts.phone && <div className="b__form_inscription col-md-5 col-12">
-                        Вы также можете забронировать стол, позвонив по номеру <a href={`tel:${contacts.contacts.phone}`}>{contacts.contacts.phone}</a> 
-                    </div>}
+                    <div className="b__form_inscription col-md-5 col-12">
+                        {addData.inscription}  
+                    </div>
                 </form>
                 
                 </div>
                 <div className="b__booking_footerDescription">
-                    <p><strong>Наш администратор перезвонит вам, и вы сможете передать ему все свои пожелания.</strong></p>
+                    <p><strong>{addData.title} </strong></p>
 
-                        <p>Пожалуйста, сохраните сообщение с подтверждением бронирования ресторана на вашем телефоне.</p>
-                        
-                      <p>Пожалуйста, если вы опаздываете, сообщите нам об этом по номеру телефона бара. Если вы
-                        опоздаете более чем на 20 минут, мы не сможем гарантировать вам столик.</p>
+                        <p>{addData.description} </p>
                    </div>
             </div>
         <div className="modals">

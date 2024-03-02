@@ -6,6 +6,7 @@ function Interior() {
      const [interiorData, setData] = useState({
         interior:{
             description:'',
+            title:'',
             interior_imgs: []
         }
      })
@@ -70,7 +71,7 @@ function Interior() {
             <div className="container-xl">
                 <div className="b__interier_wrapper">
                     <div className="b__interier_description col-lg-5 col-12">
-                        <div className="b__interier_title">Наша атмосфера</div>
+                        <div className="b__interier_title">{interiorData.interior.title}</div>
                         <div className="b__interier_text">
                             {interiorData.interior.description}
                         </div>

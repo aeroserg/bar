@@ -18,10 +18,10 @@ function AboutUs() {
                 <div className="b__content">
                     <div className="b__quote">
                         <blockquote>
-                                {aboutData.about.description}
+                            {aboutData.about.description}
                         </blockquote>
                         <div className="b__undertext">
-                            <p>Ирландская народная мудрость</p>
+                            <p>{aboutData.about.inscription}</p>
                         </div>
                     </div>
                     <div className="b__imgs">   

@@ -1,13 +1,25 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from .models import *
-import socket
+from .forms import WorkTimeForm
+
+
+@admin.register(MainPage)
+class MainPageAdmin(admin.ModelAdmin):
+    def has_add_permission(self, *args, **kwargs):
+        return not MainPage.objects.exists()
 
 
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin):
     def has_add_permission(self, *args, **kwargs):
         return not About.objects.exists()
+
+
+@admin.register(WhyUs)
+class WhyUsAdmin(admin.ModelAdmin):
+    def has_add_permission(self, *args, **kwargs):
+        return not WhyUs.objects.exists()
 
 
 class InteriorImageAdmin(admin.StackedInline):
@@ -45,7 +57,7 @@ class MenuAdmin(admin.ModelAdmin):
         try:
             return mark_safe(f'<img src="http://barmayak.ru/{obj.photo.path.replace("/app", "")}">')
         except:
-            return "Hello!"
+            return "Preview!"
 
 
 @admin.register(MenuPDF)
@@ -68,8 +80,17 @@ class WorkDayAdmin(admin.ModelAdmin):
 
 @admin.register(WorkTime)
 class WorkTimeAdmin(admin.ModelAdmin):
+    form = WorkTimeForm
+    readonly_fields = ["preview"]
+
     def has_add_permission(self, *args, **kwargs):
         return not WorkTime.objects.exists()
+
+    def preview(self, obj):
+        try:
+            return mark_safe(f'<img src="http://barmayak.ru/{obj.photo.path.replace("/app", "")}">')
+        except:
+            return "Preview!"
 
 
 class DaysAdmin(admin.StackedInline):
@@ -111,3 +132,9 @@ class SendEmailSettingsAdmin(admin.ModelAdmin):
 class EmailMessageAdmin(admin.ModelAdmin):
     def get_model_perms(self, request):
         return {}
+
+
+@admin.register(ReservationTexts)
+class ReservationTextsAdmin(admin.ModelAdmin):
+    def has_add_permission(self, *args, **kwargs):
+        return not ReservationTexts.objects.exists()

@@ -6,8 +6,21 @@ import datetime
 from calendar import monthrange
 
 from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
-                     WorkTime, Reservation, Days, MenuPDF, DayContent)
+                     WorkTime, Reservation, Days, MenuPDF, DayContent, MainPage, WhyUs, ReservationTexts)
 from .send_mail import SendMail
+
+
+class MainPageView(APIView):
+    def get(self, request):
+        main_page_content = MainPage.objects.all()[0]
+        return Response(
+            {"main_page":
+                 {
+                     "title": main_page_content.title,
+                     "description": main_page_content.description
+                 }
+            }
+        )
 
 
 class GetAboutView(APIView):
@@ -16,9 +29,25 @@ class GetAboutView(APIView):
         return Response(
             {"about":
                 {
+                    "inscription": about_content.inscription,
                     "description": about_content.description,
                     "photo": about_content.photo.file.name.replace('/app', '')
                 }
+            }
+        )
+
+
+class WhyUsView(APIView):
+    def get(self, request):
+        why_us_content = WhyUs.objects.all()[0]
+        return Response(
+            {"why_us":
+                 {
+                     "description1": why_us_content.description1,
+                     "description2": why_us_content.description2,
+                     "description3": why_us_content.description3,
+                     "description4": why_us_content.description4
+                 }
             }
         )
 
@@ -42,7 +71,7 @@ class GetInteriorView(APIView):
             {
                 "interior":
                 {
-
+                    "title": interior_content.title,
                     "description": interior_content.description,
                     "interior_imgs": interior_imgs
                 }
@@ -70,7 +99,6 @@ class MenuView(APIView):
                 ]
             }
         ]}
-        print(response)
 
         c = {'category_name': init_category, 'dishes': []}
 
@@ -169,8 +197,15 @@ class WorkingHoursView(APIView):
 class GetReservationView(APIView):
     def get(self, request):
 
-        response = {'dates': []}
         reservation = Reservation.objects.all().order_by('id')
+        reservation_text = ReservationTexts.objects.all()[0]
+
+        response = {
+            "title": reservation_text.title,
+            "description": reservation_text.description,
+            "inscription": reservation_text.inscription,
+            'dates': []
+        }
 
         j = 0
         for reserv in reservation:

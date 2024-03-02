@@ -3,6 +3,8 @@ from . import views
 
 
 urlpatterns = [
+    path('main_page/', views.MainPageView.as_view()),
+    path('why_us/', views.WhyUsView.as_view()),
     path('send_email/', views.EmailMessageView.as_view()),
     path('about/', views.GetAboutView.as_view()),
     path('interior/', views.GetInteriorView.as_view()),

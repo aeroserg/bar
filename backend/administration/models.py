@@ -1,9 +1,22 @@
 from django.db import models
 
 
+class MainPage(models.Model):
+    title = models.TextField(verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
+
+    def __str__(self):
+        name_object = 'Главная страница'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Главная страница'
+
+
 class About(models.Model):
-    photo = models.FileField(upload_to='about/')
-    description = models.TextField()
+    photo = models.FileField(upload_to='about/', verbose_name='Фото')
+    description = models.TextField(verbose_name='Описание')
+    inscription = models.TextField(default=None, verbose_name='Подпись')
 
     def __str__(self):
         name_object = f'О нас'
@@ -13,8 +26,23 @@ class About(models.Model):
         verbose_name_plural = 'О нас'
 
 
+class WhyUs(models.Model):
+    description1 = models.TextField(verbose_name='Описание 1')
+    description2 = models.TextField(verbose_name='Описание 2')
+    description3 = models.TextField(verbose_name='Описание 3')
+    description4 = models.TextField(verbose_name='Описание 4')
+
+    def __str__(self):
+        name_object = f'Почему мы'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Почему мы'
+
+
 class Interior(models.Model):
-    description = models.TextField()
+    title = models.TextField(default=None, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
 
     def __str__(self):
         name_object = f'Интерьер'
@@ -26,12 +54,12 @@ class Interior(models.Model):
 
 class InteriorImage(models.Model):
     interior = models.ForeignKey(Interior, default=None, on_delete=models.CASCADE)
-    photo = models.FileField(upload_to='interior/')
-    description = models.TextField()
+    photo = models.FileField(upload_to='interior/', verbose_name='Фото')
+    description = models.TextField(verbose_name='Описание')
 
 
 class CategorySection(models.Model):
-    category = models.CharField(max_length=255)
+    category = models.CharField(max_length=255, verbose_name='Название')
 
     def __str__(self):
         name_object = self.category
@@ -39,12 +67,12 @@ class CategorySection(models.Model):
 
 
 class Menu(models.Model):
-    photo = models.FileField()
-    price = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    description = models.TextField()
+    photo = models.FileField(verbose_name='Фото')
+    price = models.CharField(max_length=255, verbose_name='Цена')
+    name = models.CharField(max_length=255, verbose_name='Название')
+    description = models.TextField(verbose_name='Описание')
     is_promo = models.BooleanField()
-    category = models.ForeignKey(CategorySection, on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(CategorySection, on_delete=models.CASCADE, null=True, verbose_name='Категория')
 
     def __str__(self):
         name_object = self.name
@@ -55,9 +83,9 @@ class Menu(models.Model):
 
 
 class Contact(models.Model):
-    phone = models.CharField(max_length=255)
-    address = models.TextField()
-    work_time = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255, verbose_name='Телефон')
+    address = models.TextField(verbose_name='Адрес')
+    work_time = models.CharField(max_length=255, verbose_name='Рабочие часы')
 
     def __str__(self):
         name_object = f'Контакты'
@@ -68,9 +96,9 @@ class Contact(models.Model):
 
 
 class WorkDay(models.Model):
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-    is_vacation = models.BooleanField()
+    start_time = models.TimeField(default=None, verbose_name='Начало рабочего дня')
+    end_time = models.TimeField(default=None, verbose_name='Конец рабочего дня')
+    is_vacation = models.BooleanField(verbose_name='Выходной')
 
     def __str__(self):
         name_object = f'{self.start_time} - {self.end_time}'
@@ -78,13 +106,14 @@ class WorkDay(models.Model):
 
 
 class WorkTime(models.Model):
-    monday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="monday")
-    tuesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="tuesday")
-    wednesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="wednesday")
-    thursday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="thursday")
-    friday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="friday")
-    saturday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="saturday")
-    sunday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="sunday")
+    monday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="monday", verbose_name='Понедельник')
+    tuesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="tuesday", verbose_name='Вторник')
+    wednesday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="wednesday", verbose_name='Среда')
+    thursday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="thursday", verbose_name='Четверг')
+    friday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="friday", verbose_name='Пятница')
+    saturday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="saturday", verbose_name='Суббота')
+    sunday = models.OneToOneField(WorkDay, on_delete=models.CASCADE, related_name="sunday", verbose_name='Воскресенье')
+    photo = models.FileField(upload_to='work_time/', default=None, verbose_name='Фото')
 
     def __str__(self):
         name_object = f'Рабочие часы'
@@ -164,3 +193,16 @@ class MenuPDF(models.Model):
 
     class Meta:
         verbose_name_plural = 'Меню в pdf'
+
+
+class ReservationTexts(models.Model):
+    title = models.TextField(default=None, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
+    inscription = models.TextField(default=None, verbose_name='Подпись')
+
+    def __str__(self):
+        name_object = 'Текст на странице бронирования'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Текст на странице бронирования'

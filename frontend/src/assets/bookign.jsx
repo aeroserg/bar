@@ -252,7 +252,7 @@ const [isLoading, setLoading] = useState(false)
                     <div className="f__input_wrapper">
                         <input required type="text" name="user_name" id="user_name" className="f__user_name" placeholder="Имя" value={userName} onChange={(e) => {setUserName(e.target.value)}}/>
                         <input required type="number" name="user_phone" id="user_phone" className="f__user_phone" placeholder="Телефон" value={userPhone} onChange={(e) => {setUserPhone(e.target.value)}}/>
-                        <input required type="number" min={0} max={20} name="user_quantity" id="user_quantity" className="f__user_quantity" placeholder="Кол-во гостей" value={userQuantity} onChange={(e) => {setQuantity(e.target.value)}}/>
+                        <input required type="number" min={0} max={25} name="user_quantity" id="user_quantity" className="f__user_quantity" placeholder="Кол-во гостей" value={userQuantity} onChange={(e) => {setQuantity(e.target.value)}}/>
                     </div>
                
                 <div className="b__dateForSlide_container">

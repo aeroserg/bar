@@ -8,16 +8,16 @@ export const reducer = (state, action) => {
       case 'unsuccess':
         return {
           message_res_id: 0,
-          message: 'Что-то пошло не так! Обращаем внимание, что если вы находитесь в режиме инкогнито, заброировать место не получится. Попытайтесь позже или позвоните нам по телефону',
+          message: 'Что-то пошло не так! Попробуйте забронировать меньшее количество мест или попробуйте снова позже.',
         };
       case 'open':
         return {
             isShown: true
         }
-        case 'close':
-            return {
-                isShown: false
-            }
+      case 'close':
+        return {
+            isShown: false
+        }
       default:
         return state;
     }

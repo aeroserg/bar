@@ -6,7 +6,7 @@ import datetime
 from calendar import monthrange
 
 from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
-                     WorkTime, Reservation, Days, MenuPDF, DayContent, MainPage, WhyUs, ReservationTexts)
+                     WorkTime, Reservation, Days, MenuPDF, DayContent, MainPage, WhyUs, ReservationTexts, Order)
 from .send_mail import SendMail
 
 
@@ -244,12 +244,31 @@ class AddReservationView(APIView):
 
         day_reservation = Days.objects.get(date=date)
         time_reservation = DayContent.objects.get(id=day_reservation.day_content.id)
+
+        if day_reservation.all_day_is_reserved:
+            return Response({'success': False})
+
         if getattr(time_reservation, time):
             return Response({'success': False})
-        setattr(time_reservation, time, True)
-        setattr(time_reservation, f'{time}_guests_quantity', guest_quantity)
-        setattr(time_reservation, f'{time}_name', name)
-        setattr(time_reservation, f'{time}_phone_number', phone)
+
+        available_seats = getattr(time_reservation, f'{time}_available_seats')
+
+        if guest_quantity > available_seats:
+            return Response(
+                {
+                    'success': False,
+                    'available_seats': getattr(time_reservation, f'{time}_available_seats')
+                }
+            )
+
+        new_order = Order(date=date, time=time, name=name, phone_number=phone, guests_quantity=guest_quantity)
+        new_order.save()
+
+        setattr(time_reservation, f'{time}_available_seats', available_seats - guest_quantity)
+
+        if available_seats - guest_quantity == 0:
+            setattr(time_reservation, time, True)
+
         time_reservation.save()
 
         queryset_email_cred = SendEmailSettings.objects.all()

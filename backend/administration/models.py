@@ -149,20 +149,34 @@ class Reservation(models.Model):
         verbose_name_plural = 'Бронирование'
 
 
+class Order(models.Model):
+    date = models.DateField(verbose_name="Дата")
+    time = models.CharField(max_length=15, verbose_name="Время")
+    guests_quantity = models.IntegerField(blank=True, null=True, verbose_name="Количество гостей")
+    name = models.CharField(max_length=400, blank=True, null=True, verbose_name="Имя")
+    phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="Номер телефона")
+
+    def __str__(self):
+        name_object = f"Дата: {self.date}, Время: {self.time}, Имя: {self.name}"
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Заявки на бронирование'
+
+
 class DayContent(models.Model):
     for hour in range(12, 24):
         for minute in range(0, 60, 30):
             time_str = f"{hour:02d}:{minute:02d}"
-            locals()[time_str] = models.BooleanField()
-            locals()[f'{time_str}_guests_quantity'] = models.IntegerField(blank=True, null=True)
-            locals()[f'{time_str}_name'] = models.CharField(max_length=400, blank=True, null=True)
-            locals()[f'{time_str}_phone_number'] = models.CharField(max_length=20, blank=True, null=True)
+            locals()[time_str] = models.BooleanField(verbose_name="Все места заняты")
+            locals()[f'{time_str}_available_seats'] = models.IntegerField(default=25, verbose_name="Свободные места")
 
 
 class Days(models.Model):
-    month = models.ForeignKey(Reservation, default=None, on_delete=models.CASCADE)
-    date = models.DateField(default=None)
-    day_content = models.ForeignKey(DayContent, on_delete=models.CASCADE)
+    month = models.ForeignKey(Reservation, default=None, on_delete=models.CASCADE, verbose_name="Месяц")
+    date = models.DateField(default=None, verbose_name="Дата")
+    day_content = models.ForeignKey(DayContent, on_delete=models.CASCADE, verbose_name="Время")
+    all_day_is_reserved = models.BooleanField(default=False, verbose_name="Весь день Забронирован")
 
 
 class SendEmailSettings(models.Model):

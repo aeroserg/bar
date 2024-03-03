@@ -143,3 +143,9 @@ class EmailMessageAdmin(admin.ModelAdmin):
 class ReservationTextsAdmin(admin.ModelAdmin):
     def has_add_permission(self, *args, **kwargs):
         return not ReservationTexts.objects.exists()
+
+
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyAdmin(admin.ModelAdmin):
+    def has_add_permission(self, *args, **kwargs):
+        return not PrivacyPolicy.objects.exists()

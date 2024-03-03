@@ -220,3 +220,14 @@ class ReservationTexts(models.Model):
 
     class Meta:
         verbose_name_plural = 'Текст на странице бронирования'
+
+
+class PrivacyPolicy(models.Model):
+    privacy_policy = models.FileField(upload_to='privacy_policy/')
+
+    def __str__(self):
+        name_object = 'Политика конфиденциальности'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Политика конфиденциальности'

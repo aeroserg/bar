@@ -6,7 +6,8 @@ import datetime
 from calendar import monthrange
 
 from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
-                     WorkTime, Reservation, Days, MenuPDF, DayContent, MainPage, WhyUs, ReservationTexts, Order)
+                     WorkTime, Reservation, Days, MenuPDF, DayContent, MainPage, WhyUs, ReservationTexts, Order,
+                     PrivacyPolicy)
 from .send_mail import SendMail
 
 
@@ -200,11 +201,13 @@ class GetReservationView(APIView):
 
         reservation = Reservation.objects.all().order_by('id')
         reservation_text = ReservationTexts.objects.all()[0]
+        privacy_policy = PrivacyPolicy.objects.all()[0]
 
         response = {
             "title": reservation_text.title,
             "description": reservation_text.description,
             "inscription": reservation_text.inscription,
+            "policy_link": privacy_policy.privacy_policy.path.replace('/app', ''),
             'dates': []
         }
 

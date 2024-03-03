@@ -2,28 +2,28 @@ import { useState, useEffect} from "react";
 
 const HOST = location.protocol + '//' + location.host
 
-
-const [whyUsData, setWhyUsData] = useState({
-    why_us: {
-        description1: '',
-        description2: '',
-        description3: '',
-        description4: ''
-    }
-})
-
-useEffect(() =>{
-    fetch(`${HOST}/api/why_us/`)
-    .then(response => response.json())
-    .then(data => {
-        setWhyUsData(data);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-}, []);
-
 function WhyUs() {
+
+    const [whyUsData, setWhyUsData] = useState({
+        why_us: {
+            description1: '',
+            description2: '',
+            description3: '',
+            description4: ''
+        }
+    })
+    
+    useEffect(() =>{
+        fetch(`${HOST}/api/why_us/`)
+        .then(response => response.json())
+        .then(data => {
+            setWhyUsData(data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
     return (
         <section className="l-section"  id="whyUs">
         <h2 className="k__medium">Почему мы?</h2>

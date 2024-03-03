@@ -31,6 +31,7 @@ export default function Booking() {
         title: '',
         description: '',
         inscription: '',
+        policy_link: '',
         dates: {}
     })
     const [firstDayWeekIndex, setFirstDayWeekIndex] = useState(1)

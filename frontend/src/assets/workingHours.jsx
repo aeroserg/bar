@@ -6,6 +6,7 @@ function WorkingHours() {
 
     const apiUrl = `${HOST}/api/working_hours/`;
     const initialData = {
+        photo: '/img/bg_img.png',
         working_hours: {
             monday: {
                 start: '',
@@ -51,7 +52,7 @@ function WorkingHours() {
         <div className="container-xl">
             <div className="b__workingHours_wrapper">
                 <div className="b__bgc_img">
-                    <img src={working_hours.working_hours.photo} alt="" />
+                    <img src={working_hours.photo} alt="" />
                 </div>
                 <div className="b__timetable_wrapper">
                     <div className="b__time_item">

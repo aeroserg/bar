@@ -145,6 +145,7 @@ class WorkingHoursView(APIView):
 
         return Response(
             {
+                "photo": working_hours.photo.file.name.replace('/app', ''),
                 "working_hours":
                     {
                         "monday":

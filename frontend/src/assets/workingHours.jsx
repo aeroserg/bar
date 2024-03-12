@@ -46,7 +46,9 @@ function WorkingHours() {
     }
      const working_hours = useApiData(apiUrl, initialData);
     return (
-        <section className="l-section"  id="workingHours">
+
+        <section className="l-section"  id="workingHours"> 
+
         <h2 className="k__large">Время работы</h2>
         <div className="container-xl">
             <div className="b__workingHours_wrapper">

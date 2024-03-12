@@ -87,6 +87,7 @@ p.primary_text {
     color: #ff883e;
     transition: all .3s;
 }
+
 .b__phone a:hover {
     text-decoration: underline;
 }

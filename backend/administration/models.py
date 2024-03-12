@@ -16,7 +16,7 @@ class MainPage(models.Model):
 class About(models.Model):
     photo = models.FileField(upload_to='about/', verbose_name='Фото')
     description = models.TextField(verbose_name='Описание')
-    inscription = models.TextField(default=None, verbose_name='Подпись')
+    inscription = models.TextField(default=None, verbose_name='Подпись', null=True)
 
     def __str__(self):
         name_object = f'О нас'
@@ -220,3 +220,14 @@ class ReservationTexts(models.Model):
 
     class Meta:
         verbose_name_plural = 'Текст на странице бронирования'
+
+
+class PrivacyPolicy(models.Model):
+    privacy_policy = models.FileField(upload_to='privacy_policy/')
+
+    def __str__(self):
+        name_object = 'Политика конфиденциальности'
+        return name_object
+
+    class Meta:
+        verbose_name_plural = 'Политика конфиденциальности'

@@ -4,6 +4,11 @@ from .models import *
 from .forms import WorkTimeForm
 
 
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(MainPage)
 class MainPageAdmin(admin.ModelAdmin):
     def has_add_permission(self, *args, **kwargs):
@@ -138,3 +143,9 @@ class EmailMessageAdmin(admin.ModelAdmin):
 class ReservationTextsAdmin(admin.ModelAdmin):
     def has_add_permission(self, *args, **kwargs):
         return not ReservationTexts.objects.exists()
+
+
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyAdmin(admin.ModelAdmin):
+    def has_add_permission(self, *args, **kwargs):
+        return not PrivacyPolicy.objects.exists()

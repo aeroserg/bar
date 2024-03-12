@@ -507,6 +507,7 @@ a.btn__call_to_action#download_menu {
 .b__bgc_img img {
     width: 100%;
     height: 410px;
+    min-height: 460px;
     object-fit: cover;
     max-height: 470px;
     border: 3px solid #000000;
@@ -750,6 +751,21 @@ button[type="submit"] {
     font-weight: 400;
     margin-top: 3rem;
 }
+.b__form_link {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 1rem;
+    color: #878787;
+}
+.b__form_link a {
+   color:#000000;
+   text-decoration: underline;
+}
+.b__form_link a:hover, .b__form_link a:focus{
+    color:#000000;
+    text-decoration: underline;
+ }
 .b__form_inscription a {
     text-decoration: none;
     color: #000000;

@@ -31,6 +31,7 @@ export default function Booking() {
         title: '',
         description: '',
         inscription: '',
+        policy_link: '',
         dates: {}
     })
     const [firstDayWeekIndex, setFirstDayWeekIndex] = useState(1)
@@ -315,6 +316,7 @@ const [isLoading, setLoading] = useState(false)
                     <div className="b__form_inscription col-md-5 col-12">
                         {addData.inscription}  
                     </div>
+                    <div class="b__form_link ">Нажимая кнопку "Забронировать", вы соглашаетесь с <a href={addData.policy_link}>политикой конфиденциальности</a></div>
                 </form>
                 
                 </div>

@@ -6,7 +6,8 @@ import datetime
 from calendar import monthrange
 
 from .models import (SendEmailSettings, About, Interior, InteriorImage, Menu, Contact,
-                     WorkTime, Reservation, Days, MenuPDF, DayContent, MainPage, WhyUs, ReservationTexts, Order)
+                     WorkTime, Reservation, Days, MenuPDF, DayContent, MainPage, WhyUs, ReservationTexts, Order,
+                     PrivacyPolicy)
 from .send_mail import SendMail
 
 
@@ -145,6 +146,7 @@ class WorkingHoursView(APIView):
 
         return Response(
             {
+                "photo": working_hours.photo.file.name.replace('/app', ''),
                 "working_hours":
                     {
                         "monday":
@@ -199,11 +201,13 @@ class GetReservationView(APIView):
 
         reservation = Reservation.objects.all().order_by('id')
         reservation_text = ReservationTexts.objects.all()[0]
+        privacy_policy = PrivacyPolicy.objects.all()[0]
 
         response = {
             "title": reservation_text.title,
             "description": reservation_text.description,
             "inscription": reservation_text.inscription,
+            "policy_link": privacy_policy.privacy_policy.path.replace('/app', ''),
             'dates': []
         }
 
@@ -366,8 +370,10 @@ class AddNewMonth(APIView):
         current_date = datetime.datetime.today()
         second_month_date = current_date.month % 12 + 2
         second_year_date = current_date.year
+
         if second_month_date < current_date.month:
             second_year_date += 1
+
         second_month = datetime.date(second_year_date, second_month_date, 1)
         month_name = second_month.strftime('%B')
 

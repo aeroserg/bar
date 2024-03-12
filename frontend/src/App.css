@@ -8,7 +8,7 @@ h1,h2,h3,h4,h5 {
     font-weight: 600;
 }
 .l__main_section {
-    background-image: url('../img/bg_img.png');
+    background-image: url('../img/bgimg.JPG');
     background-attachment: fixed;
     background-position: top center;
     background-clip: border-box;

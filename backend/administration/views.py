@@ -18,7 +18,8 @@ class MainPageView(APIView):
             {"main_page":
                  {
                      "title": main_page_content.title,
-                     "description": main_page_content.description
+                     "description": main_page_content.description,
+                     "photo": main_page_content.photo.file.name.replace('/app', '')
                  }
             }
         )

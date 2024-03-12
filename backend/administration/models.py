@@ -4,6 +4,7 @@ from django.db import models
 class MainPage(models.Model):
     title = models.TextField(verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
+    photo = models.FileField(upload_to='main_page/', verbose_name='Фото', default=None, null=True)
 
     def __str__(self):
         name_object = 'Главная страница'

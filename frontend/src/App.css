@@ -76,7 +76,7 @@ p.primary_text {
 }
 .b__nav ul li a {
     text-decoration: none;
-    color: #ffffff;
+    color: #000000;
     transition: all .3s;
 }
 .logo svg path{
@@ -84,7 +84,7 @@ p.primary_text {
 }
 .b__phone a {
     text-decoration: none;
-    color: #FFFFFF;
+    color: #000000;
     transition: all .3s;
 }
 .b__phone a:hover {

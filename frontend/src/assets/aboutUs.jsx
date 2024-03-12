@@ -6,7 +6,7 @@ function AboutUs() {
     const initialData = {
         "about": {}
     };
-     const aboutData = useApiData(apiUrl, initialData);
+    const aboutData = useApiData(apiUrl, initialData);
     return (
         <section className="l-section" id="aboutUs">
             <div className="b__img fixed_img">

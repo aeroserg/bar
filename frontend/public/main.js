@@ -6,9 +6,7 @@ $(document).ready(function(){
     document.addEventListener('scroll', () => {
         if(window.outerWidth >=997) {
             if (window.scrollY >= currentDeviceHeight) {
-                header?.querySelectorAll('.b__nav ul li a').forEach(el => {el.style.color = '#000000'});
-                header?.querySelectorAll('path').forEach(el => {el.style.fill = '#000000'});
-                header.querySelector('.b__phone a').style.color = '#000000';
+  
                 header.style.backgroundColor = '#ffffffbd';
                 header.style.boxShadow = '0px 20px 20px 20px #ffffffbd';
                 header.style.padding = '1rem 0 0 0';
@@ -16,9 +14,7 @@ $(document).ready(function(){
                 header.querySelector('.b__menu').style.justifyContent = 'space-between';
             }
             if (window.scrollY < currentDeviceHeight) {
-                header?.querySelectorAll('.b__nav ul li a').forEach(el => {el.style.color = '#ffffff'});
-                header?.querySelectorAll('path').forEach(el => {el.style.fill = '#ffffff'});
-                header.querySelector('.b__phone a').style.color = '#ffffff';
+      
                 header.style.backgroundColor = 'unset';
                 header.style.boxShadow = 'none';
                 header.style.padding = '2rem 0';

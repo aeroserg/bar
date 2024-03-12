@@ -32,7 +32,6 @@ export default function App() {
       <Contacts />
     </main>
     <Footer />
-    {useScript('main.js')} 
     </>
   )
 }

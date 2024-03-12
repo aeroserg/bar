@@ -7,8 +7,9 @@ h1,h2,h3,h4,h5 {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
 }
-.l__main_section {
+/* .l__main_section {
     background-image: url('../img/bgimg.JPG');
+    background-color: #f7e7c4;
     background-attachment: fixed;
     background-position: top center;
     background-clip: border-box;
@@ -17,7 +18,7 @@ h1,h2,h3,h4,h5 {
     height: 100vh;
     min-height: 750px;
     padding: 9rem 0;
-}
+} */
 a {
     text-decoration: none;
     color: inherit;
@@ -33,6 +34,7 @@ header {
     width: 100%;
     transition: all .3s;
     z-index: 10;
+    color: #000000!important;
 }
 h1 {
     font-size: 67px;
@@ -43,8 +45,11 @@ h1 {
 .header__inner, .footer__inner {
     display: flex;
     font-weight: 600;
-    color: #FFFFFF;
+    color: #000000!important;
     font-size: 20px;
+}
+.header__inner .logo svg path {
+    fill: #000000;
 }
 p.primary_text {
     font-size: 26px;
@@ -1366,7 +1371,7 @@ button[type="submit"] {
         color: #000000!important;
     }
     .l__main_section {
-        background-image: url(../img/bg_img.png);
+        background-color: #f7e7c4;
         background-position: top center;
         background-repeat: no-repeat;
         background-size: 200%;

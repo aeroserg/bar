@@ -19,19 +19,18 @@ export default function App() {
   return (
     <>
     {useScript('jquery.min.js')}
-  
-    <Header />
-    <MainPage />
-    <main className="l-sections">
-      <AboutUs />
-      <MainMenu />
-      <WhyUs />
-      <Interior />
-      <WorkingHours />
-      <Booking />
-      <Contacts />
-    </main>
-    <Footer />
+      <Header />
+      <MainPage />
+      <main className="l-sections">
+        <AboutUs />
+        <MainMenu />
+        <WhyUs />
+        <Interior />
+        <WorkingHours />
+        <Booking />
+        <Contacts />
+      </main>
+      <Footer />
     {useScript('main.js')} 
     </>
   )

@@ -131,6 +131,16 @@ a.btn__call_to_action#main_sect_btn{
     display: flex;
 
 }
+.b__mob_menu li a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: all .3s;
+}
+.b__mob_menu li a:hover {
+    text-decoration: none;
+    color: #ffffff;
+    transition: all .3s;
+}
 .b__imgs img {
     z-index: 2;
     width: 100%;

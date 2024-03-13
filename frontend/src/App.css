@@ -1383,12 +1383,12 @@ button[type="submit"] {
     }
     .l__main_section {
         background-color: #f7e7c4;
-        background-position: top center;
+        background-position: top center !important;
         background-repeat: no-repeat;
-        background-size: 200%;
-        padding: 3rem 0;
-        height: 100%;
-        min-height: 100%;
+        background-size: 275% !important;
+        padding: 10rem 0 !important;
+        height: 100% !important;
+        min-height: 100% !important;
     }
     h1 {
         font-size: 25px;

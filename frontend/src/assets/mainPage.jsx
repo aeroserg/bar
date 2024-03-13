@@ -39,7 +39,7 @@ export default function MainPage() {
     `
 
     return (
-        <MainSection>
+        <MainSection className="l__main_section">
             <div className="container-xl">
                 <div className="main__text">
                     <h1>{mainPageData.main_page.title}</h1>
